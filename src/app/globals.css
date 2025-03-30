@@ -80,10 +80,10 @@ body {
   font-family: var(--font-sans);
 
   /* Background pattern */
-  background-image:
+  /* background-image:
     linear-gradient(to right, var(--color-gray-800) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-gray-800) 1px, transparent 1px);
-  background-size: 200px 300px;
+    linear-gradient(to bottom, var(--color-gray-800) 1px, transparent 1px); */
+  /* background-size: 200px 300px; */
 }
 
 /* Component classes */
@@ -218,4 +218,103 @@ body {
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+
+@layer utilities {
+  .blur-xl {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+}
+
+/* Add these new styles */
+
+/* Enhanced 3D and animation styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 30px rgba(79, 143, 255, 0.1);
+}
+
+.hover:shadow-glow:hover {
+  box-shadow: 0 0 30px rgba(79, 143, 255, 0.3);
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, var(--from-color) 0%, var(--to-color) 100%);
+}
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(79, 143, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(79, 143, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Enhanced animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-stroke {
+  animation: stroke-progress 2s ease-out forwards;
+}
+
+@keyframes stroke-progress {
+  from { stroke-dashoffset: 440; }
+  to { stroke-dashoffset: 44; }
+}
+
+.skill-orb {
+  box-shadow: 0 0 20px rgba(79, 143, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.skill-orb:hover {
+  box-shadow: 0 0 30px rgba(79, 143, 255, 0.2);
+}
+
+.tech-stack-item {
+  transition: all 0.3s ease;
+}
+
+.tech-stack-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 0 20px rgba(79, 143, 255, 0.2);
+}
+
+
 

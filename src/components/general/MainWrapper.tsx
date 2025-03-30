@@ -60,18 +60,9 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
 
   return (
     <div
-      className="relative w-full min-h-screen bg-[#0a0e17]"
+      className="relative lg:w-[1000px]  min-h-screen "
       style={{ minHeight: "100vh" }}
     >
-      {/* Static grid background */}
-      <div
-        className="fixed inset-0 z-0 grid-background"
-        style={{
-          height: `${dimensions.scrollHeight}px`,
-          transform: `translateY(-${dimensions.scrollY * 0.5}px)`,
-        }}
-      ></div>
-
       {/* Animated vertical lines container */}
       <div
         className="fixed inset-0 z-0 overflow-visible"

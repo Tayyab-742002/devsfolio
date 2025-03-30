@@ -58,7 +58,10 @@ export type GithubUrlDocument<Lang extends string = string> =
     Lang
   >;
 
-type LandingPageDocumentDataSlicesSlice = HeroSlice | NavbarSlice;
+type LandingPageDocumentDataSlicesSlice =
+  | AboutMeSlice
+  | HeroSlice
+  | NavbarSlice;
 
 /**
  * Content for Landing Page documents
@@ -196,6 +199,170 @@ export type AllDocumentTypes =
   | TechStackDocument
   | TitleDocument
   | UidDocument;
+
+/**
+ * Item in *AboutMe → Default → Primary → TechAreas*
+ */
+export interface AboutMeSliceDefaultPrimaryTechareasItem {
+  /**
+   * Title field in *AboutMe → Default → Primary → TechAreas*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.techareas[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Percentage field in *AboutMe → Default → Primary → TechAreas*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.techareas[].percentage
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  percentage: prismic.KeyTextField;
+}
+
+/**
+ * Item in *AboutMe → Default → Primary → Tags*
+ */
+export interface AboutMeSliceDefaultPrimaryTagsItem {
+  /**
+   * Tag name field in *AboutMe → Default → Primary → Tags*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.tags[].tag_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tag_name: prismic.KeyTextField;
+}
+
+/**
+ * Item in *AboutMe → Default → Primary → Tech Skills*
+ */
+export interface AboutMeSliceDefaultPrimaryTechSkillsItem {
+  /**
+   * skill field in *AboutMe → Default → Primary → Tech Skills*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.tech_skills[].skill
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  skill: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *AboutMe → Default → Primary*
+ */
+export interface AboutMeSliceDefaultPrimary {
+  /**
+   * avatar field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.avatar
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  avatar: prismic.ImageField<never>;
+
+  /**
+   * TechAreas field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.techareas[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  techareas: prismic.GroupField<
+    Simplify<AboutMeSliceDefaultPrimaryTechareasItem>
+  >;
+
+  /**
+   * My Journey field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.my_journey
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  my_journey: prismic.KeyTextField;
+
+  /**
+   * Journey Detail field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.journey_detail
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  journey_detail: prismic.KeyTextField;
+
+  /**
+   * Tags field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.tags[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  tags: prismic.GroupField<Simplify<AboutMeSliceDefaultPrimaryTagsItem>>;
+
+  /**
+   * Tech Expertise field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.tech_expertise
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tech_expertise: prismic.KeyTextField;
+
+  /**
+   * Tech Skills field in *AboutMe → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_me.default.primary.tech_skills[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  tech_skills: prismic.GroupField<
+    Simplify<AboutMeSliceDefaultPrimaryTechSkillsItem>
+  >;
+}
+
+/**
+ * Default variation for AboutMe Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutMeSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<AboutMeSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *AboutMe*
+ */
+type AboutMeSliceVariation = AboutMeSliceDefault;
+
+/**
+ * AboutMe Shared Slice
+ *
+ * - **API ID**: `about_me`
+ * - **Description**: AboutMe
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutMeSlice = prismic.SharedSlice<
+  "about_me",
+  AboutMeSliceVariation
+>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -385,6 +552,13 @@ declare module "@prismicio/client" {
       UidDocument,
       UidDocumentData,
       AllDocumentTypes,
+      AboutMeSlice,
+      AboutMeSliceDefaultPrimaryTechareasItem,
+      AboutMeSliceDefaultPrimaryTagsItem,
+      AboutMeSliceDefaultPrimaryTechSkillsItem,
+      AboutMeSliceDefaultPrimary,
+      AboutMeSliceVariation,
+      AboutMeSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
