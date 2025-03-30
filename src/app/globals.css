@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark theme (default) */
+  --background: #0f0f1a;
+  --foreground: #ffffff;
+  --primary-500: #4f8fff;
+  --primary-600: #3a7ae6;
+  --dark-500: #14141e;
+  --dark-600: #0f0f1a;
+  --dark-700: #0a0a12;
+  --secondary-500: #00ffaa;
+  --gray-500: #cccccc;
+  --gray-600: #aaaaaa;
+  --gray-700: #555555;
+  --gray-800: #252535;
+  --gray-900: #1a1a2e;
+  --accent-blue: #4f8fff;
+  --accent-teal: #00ffaa;
+  --success: #00cc88;
+  --info: #4f8fff;
+
+  /* Extended colors from SVG */
+  --glow-opacity: 0.3;
+  --avatar-gradient: radial-gradient(circle, #4f8fffcc 0%, #4f8fff00 100%);
+  --bg-gradient: linear-gradient(
+    135deg,
+    #4f8fff10 0%,
+    #00ffaa05 50%,
+    #4f8fff10 100%
+  );
 }
 
 @theme inline {
+  /* Base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Primary */
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+
+  /* Dark */
+  --color-dark-500: var(--dark-500);
+  --color-dark-600: var(--dark-600);
+  --color-dark-700: var(--dark-700);
+
+  /* Secondary */
+  --color-secondary-500: var(--secondary-500);
+
+  /* Gray */
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+
+  /* Accents */
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-teal: var(--accent-teal);
+
+  /* Semantic */
+  --color-success: var(--success);
+  --color-info: var(--info);
+
+  /* Shadows */
+  --shadow-neumorph:
+    5px 5px 10px rgba(0, 0, 0, 0.5), -5px -5px 10px rgba(79, 143, 255, 0.05);
+  --shadow-card: 0 0 20px rgba(79, 143, 255, 0.07);
+  --shadow-input:
+    2px 2px 6px rgba(0, 0, 0, 0.5), -2px -2px 6px rgba(79, 143, 255, 0.03);
+
+  /* Fonts */
+  --font-sans: Arial, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+
+  /* Background pattern */
+  background-image:
+    linear-gradient(to right, var(--color-gray-800) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-gray-800) 1px, transparent 1px);
+  background-size: 200px 300px;
+}
+
+/* Component classes */
+
+.card {
+  background: var(--color-dark-500);
+  border: 1px solid var(--color-gray-800);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-card);
+  color: var(--color-foreground);
+}
+
+.neumorphic {
+  background: var(--color-dark-500);
+  border-radius: 2.5rem;
+  box-shadow: var(--shadow-neumorph);
+}
+
+.input-field {
+  background: var(--color-dark-500);
+  border: 1px solid var(--color-gray-800);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-input);
+}
+
+.glow-text {
+  text-shadow: 0 0 8px var(--color-accent-blue);
+}
+
+.gradient-overlay {
+  background-image: var(--bg-gradient);
+  opacity: 0.2;
+}
+/* Animation keyframes */
+@keyframes typing-cursor {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
