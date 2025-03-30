@@ -58,7 +58,7 @@ export type GithubUrlDocument<Lang extends string = string> =
     Lang
   >;
 
-type LandingPageDocumentDataSlicesSlice = NavbarSlice;
+type LandingPageDocumentDataSlicesSlice = HeroSlice | NavbarSlice;
 
 /**
  * Content for Landing Page documents
@@ -198,6 +198,78 @@ export type AllDocumentTypes =
   | UidDocument;
 
 /**
+ * Primary content in *Hero → Default → Primary*
+ */
+export interface HeroSliceDefaultPrimary {
+  /**
+   * Name field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Your Name
+   * - **API ID Path**: hero.default.primary.name
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  name: prismic.RichTextField;
+
+  /**
+   * title field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Your Profession
+   * - **API ID Path**: hero.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * expertise field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Your tech fields
+   * - **API ID Path**: hero.default.primary.expertise
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  expertise: prismic.RichTextField;
+
+  /**
+   * CTA field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Call To Action Button
+   * - **API ID Path**: hero.default.primary.cta
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for Hero Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<HeroSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Hero*
+ */
+type HeroSliceVariation = HeroSliceDefault;
+
+/**
+ * Hero Shared Slice
+ *
+ * - **API ID**: `hero`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
  * Item in *Navbar → Default → Primary → Links*
  */
 export interface NavbarSliceDefaultPrimaryLinksItem {
@@ -313,6 +385,10 @@ declare module "@prismicio/client" {
       UidDocument,
       UidDocumentData,
       AllDocumentTypes,
+      HeroSlice,
+      HeroSliceDefaultPrimary,
+      HeroSliceVariation,
+      HeroSliceDefault,
       NavbarSlice,
       NavbarSliceDefaultPrimaryLinksItem,
       NavbarSliceDefaultPrimary,

@@ -110,7 +110,7 @@ body {
 }
 
 .glow-text {
-  text-shadow: 0 0 8px var(--color-accent-blue);
+  text-shadow: 0 0 20px rgba(79, 143, 255, 0.5);
 }
 
 .gradient-overlay {
@@ -206,5 +206,16 @@ body {
   @apply opacity-100 w-6;
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
 
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
 
