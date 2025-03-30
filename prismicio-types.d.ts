@@ -59,6 +59,7 @@ export type GithubUrlDocument<Lang extends string = string> =
   >;
 
 type LandingPageDocumentDataSlicesSlice =
+  | ExperienceSlice
   | AboutMeSlice
   | HeroSlice
   | NavbarSlice;
@@ -365,6 +366,118 @@ export type AboutMeSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Item in *Experience → Default → Primary → experiences*
+ */
+export interface ExperienceSliceDefaultPrimaryExperiencesItem {
+  /**
+   * Title field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Key achievement field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].key_achievement
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  key_achievement: prismic.KeyTextField;
+
+  /**
+   * Company Name field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].company_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  company_name: prismic.KeyTextField;
+
+  /**
+   * End Date field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].end_date
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  end_date: prismic.KeyTextField;
+
+  /**
+   * Start Date field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].start_date
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  start_date: prismic.KeyTextField;
+
+  /**
+   * Achievments field in *Experience → Default → Primary → experiences*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[].achievments
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  achievments: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *Experience → Default → Primary*
+ */
+export interface ExperienceSliceDefaultPrimary {
+  /**
+   * experiences field in *Experience → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: experience.default.primary.experiences[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  experiences: prismic.GroupField<
+    Simplify<ExperienceSliceDefaultPrimaryExperiencesItem>
+  >;
+}
+
+/**
+ * Default variation for Experience Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ExperienceSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ExperienceSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Experience*
+ */
+type ExperienceSliceVariation = ExperienceSliceDefault;
+
+/**
+ * Experience Shared Slice
+ *
+ * - **API ID**: `experience`
+ * - **Description**: Experience
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ExperienceSlice = prismic.SharedSlice<
+  "experience",
+  ExperienceSliceVariation
+>;
+
+/**
  * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -559,6 +672,11 @@ declare module "@prismicio/client" {
       AboutMeSliceDefaultPrimary,
       AboutMeSliceVariation,
       AboutMeSliceDefault,
+      ExperienceSlice,
+      ExperienceSliceDefaultPrimaryExperiencesItem,
+      ExperienceSliceDefaultPrimary,
+      ExperienceSliceVariation,
+      ExperienceSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
