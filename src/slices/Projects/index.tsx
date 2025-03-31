@@ -282,7 +282,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
             {filters.map((filter, index) => (
               <motion.button
                 key={filter}
-                className={`rounded-full px-6 py-1.5 text-sm mb-2 cursor-pointer ${
+                className={`rounded-full text-xs px-4 py-0.5 lg:px-4 lg:py-1 lg:text-sm  mb-2 cursor-pointer ${
                   activeFilter === filter
                     ? "bg-[#4f8fff] text-white"
                     : "bg-[#14141e] border border-[#4f8fff] text-white"
@@ -401,26 +401,26 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                     }}
                     transition={{
                       type: "spring",
-                      stiffness: 300,  // Reduced from 350 for smoother motion
-                      damping: 35,     // Increased from 30 for more stability
-                      mass: 1,         // Increased from 0.8 for more natural feel
+                      stiffness: 300, // Reduced from 350 for smoother motion
+                      damping: 35, // Increased from 30 for more stability
+                      mass: 1, // Increased from 0.8 for more natural feel
                       opacity: {
                         duration: 0.5, // Increased from 0.4
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       },
                       scale: {
                         duration: 0.5, // Increased from 0.4
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       },
                       rotateY: {
                         duration: 0.7, // Added specific duration for rotation
-                        ease: "easeInOut"
-                      }
+                        ease: "easeInOut",
+                      },
                     }}
                     whileHover={{
                       scale: isActive ? 1.05 : scale,
                       transition: {
-                        duration: 0.3,  // Increased from 0.2
+                        duration: 0.3, // Increased from 0.2
                         ease: "easeOut",
                       },
                     }}
@@ -464,14 +464,16 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
                       {/* Technologies */}
                       <div className="flex flex-wrap gap-2">
-                        {extractTechnologies(project).map((tech, techIndex) => (
-                          <span
-                            key={techIndex}
-                            className="px-2 py-1 text-xs bg-[#252535] rounded-full text-white hover:bg-[#4f8fff]/20 transition-colors"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                        {extractTechnologies(project).map(
+                          (tech: any, techIndex: any) => (
+                            <span
+                              key={techIndex}
+                              className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
+                            >
+                              {tech}
+                            </span>
+                          )
+                        )}
                       </div>
                     </motion.div>
                   </motion.div>
@@ -481,13 +483,13 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
           </div>
 
           {/* Navigation Controls */}
-          <div className="absolute bottom-[-3rem] left-0 right-0 flex items-center justify-center gap-8">
+          <div className="absolute bottom-[-3rem] left-0 right-0 flex items-center justify-center gap-5">
             <button
               onClick={goToPrev}
-              className="w-10 h-10 cursor-pointer rounded-full bg-[#14141e] border border-[#4f8fff] flex items-center justify-center hover:bg-[#252535] transition-colors"
+              className="w-6 h-6 cursor-pointer rounded-full bg-[#14141e] border border-[#4f8fff] flex items-center justify-center hover:bg-[#252535] transition-colors"
               disabled={filteredProjects.length <= 1}
             >
-              <svg width="20" height="20" viewBox="0 0 8 10" fill="#4f8fff">
+              <svg width="12" height="12" viewBox="0 0 8 10" fill="#4f8fff">
                 <path d="M7 1L1 5L7 9V1Z" fill="#4f8fff" />
               </svg>
             </button>
@@ -498,7 +500,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                 <div key={index} className="flex items-center">
                   <motion.button
                     onClick={() => setActiveIndex(index)}
-                    className="relative w-3 h-3"
+                    className="relative w-2 h-2"
                     whileHover={{ scale: 1.2 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -530,10 +532,10 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
             <button
               onClick={goToNext}
-              className="w-10 h-10 rounded-full cursor-pointer bg-[#14141e] border border-[#4f8fff] flex items-center justify-center hover:bg-[#252535] transition-colors"
+              className="w-6 h-6 rounded-full cursor-pointer bg-[#14141e] border border-[#4f8fff] flex items-center justify-center hover:bg-[#252535] transition-colors"
               disabled={filteredProjects.length <= 1}
             >
-              <svg width="20" height="20" viewBox="0 0 8 10" fill="#4f8fff">
+              <svg width="12" height="12" viewBox="0 0 8 10" fill="#4f8fff">
                 <path d="M1 1L7 5L1 9V1Z" fill="#4f8fff" />
               </svg>
             </button>
@@ -545,7 +547,3 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 };
 
 export default Projects;
-
-
-
-
