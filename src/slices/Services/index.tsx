@@ -190,15 +190,22 @@ const Services: FC<ServicesProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
     >
       <div className="container mx-auto px-4">
-        <div className="mb-16">
-          <div className="flex items-center services-header">
-            <span className="text-[#4f8fff] text-lg mr-4">04</span>
-            <h2 className="text-white text-3xl font-bold">SERVICES</h2>
+        <motion.div
+          className="mb-10  pl-4 md:pl-8 relative z-30"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex items-center gap-4 ">
+            <span className="text-[#4f8fff] text-lg tracking-wider neon-text">
+              04
+            </span>
+            <h2 className="text-2xl  font-bold text-white tracking-wider ">
+              SERVICES
+            </h2>
           </div>
-          <div className="services-header mt-2">
-            <div className="w-32 h-0.5 bg-[#4f8fff]" />
-          </div>
-        </div>
+          <div className="w-32 h-0.5 mt-2 bg-[#4f8fff]  ml-9 neon-divider" />
+        </motion.div>
 
         <div className="services-cards flex flex-wrap lg:flex-nowrap  justify-center items-center">
           {slice.primary.services?.map((service, index) => (
@@ -211,7 +218,7 @@ const Services: FC<ServicesProps> = ({ slice }) => {
                 index={index}
               />
               {index < slice.primary.services.length - 1 && (
-                <div className="hidden lg:block w-12 h-[1px] bg-[#4f8fff] mx-4 neon-divider" />
+                <div className="hidden lg:block w-8 h-[1px] bg-[#4f8fff] mx-4 neon-divider" />
               )}
             </div>
           ))}

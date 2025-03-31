@@ -73,20 +73,20 @@ const Experience: FC<ExperienceProps> = ({ slice }) => {
     >
       {/* Title Section */}
       <motion.div
-        className="mb-12 md:mb-20 px-4 md:px-8"
+        className="mb-10  pl-4 md:pl-8 relative z-30"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex items-center gap-3 md:gap-4">
-          <span className="text-[#4f8fff] text-sm md:text-lg tracking-wider font-mono">
+        <div className="flex items-center gap-4 ">
+          <span className="text-[#4f8fff] text-lg tracking-wider neon-text">
             02
           </span>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-wider">
+          <h2 className="text-2xl  font-bold text-white tracking-wider ">
             EXPERIENCE
           </h2>
         </div>
-        <div className="w-20 md:w-32 h-0.5 mt-2 bg-gradient-to-r from-[#4f8fff] to-transparent ml-8 md:ml-9 shadow-[0_0_10px_#4f8fff] animate-pulse" />
+        <div className="w-32 h-0.5 mt-2 bg-[#4f8fff]  ml-9 neon-divider" />
       </motion.div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 relative">

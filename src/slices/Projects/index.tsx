@@ -254,21 +254,20 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
       <div className="container mx-auto px-4">
         {/* Section Header with Animation */}
         <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-10  pl-4 md:pl-8 relative z-30"
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <div className="flex items-center">
-            <span className="text-[#4f8fff] text-lg mr-2">03</span>
-            <h2 className="text-white text-3xl font-bold">PROJECTS</h2>
+          <div className="flex items-center gap-4 ">
+            <span className="text-[#4f8fff] text-lg tracking-wider neon-text">
+              03
+            </span>
+            <h2 className="text-2xl  font-bold text-white tracking-wider ">
+              PROJECTS
+            </h2>
           </div>
-          <motion.div
-            className="w-28 h-0.5 bg-[#4f8fff] mt-1 ml-12"
-            initial={{ width: 0 }}
-            animate={{ width: "7rem" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          ></motion.div>
+          <div className="w-32 h-0.5 mt-2 bg-[#4f8fff]  ml-9 neon-divider" />
         </motion.div>
 
         {/* Filter System with Animation */}

@@ -471,3 +471,24 @@ body {
   animation: neonPulse 2s ease-in-out infinite;
 }
 
+.neon-text {
+  text-shadow: 0 0 2px #4f8fff,
+               0 0 4px #4f8fff;
+  animation: neonTextPulse 2s ease-in-out infinite;
+}
+
+@keyframes neonTextPulse {
+  0%, 100% {
+    opacity: 0.8;
+    text-shadow: 0 0 2px #4f8fff,
+                 0 0 4px #4f8fff;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 3px #4f8fff,
+                 0 0 6px #4f8fff;
+  }
+}
+
+
+

@@ -106,12 +106,12 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
           transition={{ duration: 0.8 }}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[#4f8fff] text-lg tracking-wider">01</span>
+            <span className="text-[#4f8fff] text-lg tracking-wider neon-text">01</span>
             <h2 className="text-2xl  font-bold text-white tracking-wider ">
               ABOUT ME
             </h2>
           </div>
-          <div className="w-32 h-0.5 mt-2 bg-gradient-to-r from-[#4f8fff] to-transparent ml-9" />
+          <div className="w-32 h-0.5 mt-2 bg-[#4f8fff]  ml-9 neon-divider" />
         </motion.div>
 
         {/* Desktop View */}
@@ -391,3 +391,4 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
 };
 
 export default AboutMe;
+
