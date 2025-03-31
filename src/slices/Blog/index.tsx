@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { BlogSlice } from "./types";
 import gsap from "gsap";
+import BlogModal from '@/components/BlogModal';
 
 export type BlogProps = SliceComponentProps<BlogSlice>;
 
@@ -23,6 +24,8 @@ const Blog = ({ slice }: BlogProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
+  const [selectedBlog, setSelectedBlog] = useState<typeof slice.items[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -98,6 +101,16 @@ const Blog = ({ slice }: BlogProps) => {
       }
     }
   }, [slice.items, activeIndex]);
+
+  const handleBlogClick = (blog: typeof slice.items[0]) => {
+    setSelectedBlog(blog);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBlog(null);
+  };
 
   return (
     <section className="py-20 overflow-hidden">
@@ -175,7 +188,7 @@ const Blog = ({ slice }: BlogProps) => {
                       ref={(el) => (cardRefs.current[index] = el)}
                       className="absolute transform -translate-x-1/2 left-1/2"
                       style={{
-                        cursor: isActive ? "default" : "pointer",
+                        cursor: isActive ? "pointer" : "default",
                         pointerEvents: ["left", "center", "right"].includes(
                           position
                         )
@@ -196,10 +209,9 @@ const Blog = ({ slice }: BlogProps) => {
                                 : 10,
                       }}
                       onClick={() => {
-                        if (
-                          !isActive &&
-                          ["left", "center", "right"].includes(position)
-                        ) {
+                        if (isActive) {
+                          handleBlogClick(item);
+                        } else if (["left", "center", "right"].includes(position)) {
                           if (position === "left") {
                             prevSlide();
                           } else if (position === "right") {
@@ -301,6 +313,16 @@ const Blog = ({ slice }: BlogProps) => {
                                 </div>
                               </div>
                             </div>
+
+                            {/* Reading Progress Indicator */}
+                            <div className="relative h-1 w-full bg-[#252535] rounded-full overflow-hidden">
+                              <motion.div
+                                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4f8fff] to-[#4f8fff]/70 rounded-full"
+                                initial={{ width: "0%" }}
+                                animate={{ width: `${item.reading_progress || 0}%` }}
+                                transition={{ duration: 0.5, ease: "easeOut" }}
+                              />
+                            </div>
                           </div>
                         </div>
 
@@ -367,6 +389,15 @@ const Blog = ({ slice }: BlogProps) => {
           </div>
         </div>
       </div>
+
+      {/* Add the modal */}
+      {selectedBlog && (
+        <BlogModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          blog={selectedBlog}
+        />
+      )}
     </section>
   );
 };
