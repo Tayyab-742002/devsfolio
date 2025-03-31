@@ -301,7 +301,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
         </motion.div>
 
         {/* Carousel Container */}
-        <div className="relative mx-auto max-w-4xl h-[400px] mb-12">
+        <div className="relative mx-auto max-w-4xl h-[420px] mb-12">
           <div
             ref={carouselRef}
             className="relative h-full"
@@ -355,7 +355,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                 return (
                   <motion.div
                     key={`${project.title}-${index}`}
-                    className="absolute top-0 left-0 right-0 mx-auto w-[280px]"
+                    className="absolute top-0 left-0 right-0 mx-auto w-[280px]" // Updated width to match services
                     style={{
                       cursor: isActive ? "default" : "pointer",
                       pointerEvents: ["left", "center", "right"].includes(
@@ -426,9 +426,9 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                     }}
                   >
                     <motion.div
-                      className={`bg-[#14141e] border border-[#252535] rounded-xl p-4 overflow-hidden transition-all duration-300 ${
+                      className={`bg-[#14141e] border border-[#252535] rounded-xl p-4 overflow-hidden transition-all duration-300 h-[320px] ${
                         isActive ? "border-[#4f8fff]/30" : ""
-                      }`}
+                      }`} // Added fixed height
                       animate={{
                         boxShadow: isActive
                           ? "0 8px 32px rgba(79, 143, 255, 0.15)"
@@ -440,7 +440,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       }}
                     >
                       {/* Project Image */}
-                      <div className="bg-[#252535] rounded-lg h-32 mb-4 overflow-hidden relative">
+                      <div className="bg-[#252535] rounded-lg h-40 mb-4 overflow-hidden relative">
                         {project.thumbnail ? (
                           <PrismicNextImage
                             field={project.thumbnail}
@@ -455,25 +455,27 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       </div>
 
                       {/* Project Content */}
-                      <h3 className="text-white text-lg font-semibold mb-2">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                        {project.description}
-                      </p>
+                      <div className="flex flex-col h-[calc(100%-11rem)]">
+                        <h3 className="text-white text-lg font-semibold mb-2">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                          {project.description}
+                        </p>
 
-                      {/* Technologies */}
-                      <div className="flex flex-wrap gap-2">
-                        {extractTechnologies(project).map(
-                          (tech: any, techIndex: any) => (
-                            <span
-                              key={techIndex}
-                              className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
-                            >
-                              {tech}
-                            </span>
-                          )
-                        )}
+                        {/* Technologies */}
+                        <div className="flex flex-wrap gap-2 mt-auto">
+                          {extractTechnologies(project).map(
+                            (tech: any, techIndex: any) => (
+                              <span
+                                key={techIndex}
+                                className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
+                              >
+                                {tech}
+                              </span>
+                            )
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   </motion.div>

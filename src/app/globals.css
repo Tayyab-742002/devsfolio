@@ -455,3 +455,19 @@ body {
     transform: translateX(-100%) translateY(-100%);
   }
 }
+
+@keyframes neonPulse {
+  0%, 100% {
+    opacity: 0.7;
+    box-shadow: 0 0 5px #4f8fff, 0 0 10px #4f8fff;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px #4f8fff, 0 0 20px #4f8fff;
+  }
+}
+
+.neon-divider {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+

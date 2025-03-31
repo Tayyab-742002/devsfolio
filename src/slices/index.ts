@@ -8,4 +8,5 @@ export const components = {
   hero: dynamic(() => import("./Hero")),
   navbar: dynamic(() => import("./Navbar")),
   projects: dynamic(() => import("./Projects")),
+  services: dynamic(() => import("./Services")),
 };
