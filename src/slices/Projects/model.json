@@ -17,6 +17,14 @@
             "label": "projects",
             "repeat": true,
             "fields": {
+              "category": {
+                "type": "Select",
+                "config": {
+                  "label": "Category",
+                  "placeholder": "Select project category",
+                  "options": ["WEB", "MOBILE", "AI"]
+                }
+              },
               "thumbnail": {
                 "type": "Image",
                 "config": {

@@ -130,6 +130,7 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 <PrismicNextImage
                   field={slice.primary.avatar}
                   className="w-full h-full object-cover"
+                  alt="Profile avatar"
                 />
               </div>
             </div>
@@ -249,6 +250,7 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 <PrismicNextImage
                   field={slice.primary.avatar}
                   className="w-full h-full object-cover"
+                  alt="Profile avatar"
                 />
               </div>
             </div>

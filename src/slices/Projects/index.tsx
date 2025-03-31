@@ -96,6 +96,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
         return {
           ...project,
           technologies: techArray,
+          category: project.category || "WEB", // Default to WEB if no category is set
         };
       });
     };
@@ -106,8 +107,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
       setFilteredProjects(processedProjects);
     } else {
       const filtered = processedProjects.filter(
-        (project) =>
-          project.category && project.category.toUpperCase() === activeFilter
+        (project) => project.category && project.category.toUpperCase() === activeFilter
       );
       setFilteredProjects(filtered);
     }
