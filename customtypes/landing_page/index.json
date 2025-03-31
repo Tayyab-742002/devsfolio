@@ -37,6 +37,9 @@
             },
             "navbar": {
               "type": "SharedSlice"
+            },
+            "blog": {
+              "type": "SharedSlice"
             }
           }
         }

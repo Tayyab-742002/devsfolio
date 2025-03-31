@@ -16,6 +16,6 @@ export interface BlogSlice {
     post_link: Content.LinkField;
     author_name: string;
     author_image: Content.ImageField;
-    reading_progress?: number; // percentage from 0 to 100
+    reading_progress?: number;
   }[];
 }

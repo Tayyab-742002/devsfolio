@@ -10,7 +10,6 @@
       "docURL": "...",
       "version": "initial",
       "description": "Default",
-      "imageUrl": "",
       "primary": {
         "projects": {
           "type": "Group",
@@ -40,27 +39,40 @@
                   "placeholder": ""
                 }
               },
-              "technologies": {
-                "type": "StructuredText",
+              "live_link": {
+                "type": "Link",
                 "config": {
-                  "label": "Technologies",
-                  "placeholder": "React | Node | OpenAI",
-                  "allowTargetBlank": true,
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  "label": "Live Link",
+                  "placeholder": "Project live URL"
                 }
               },
-              "category": {
-                "type": "Text",
+              "github_link": {
+                "type": "Link",
                 "config": {
-                  "label": "Category",
-                  "placeholder": "Mobile"
+                  "label": "GitHub Link",
+                  "placeholder": "Project GitHub URL"
+                }
+              },
+              "demo_video": {
+                "type": "Link",
+                "config": {
+                  "label": "Demo Video",
+                  "placeholder": "Video URL (YouTube/Vimeo)"
+                }
+              },
+              "long_description": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Long Description",
+                  "placeholder": "Detailed project description",
+                  "allowTargetBlank": true,
+                  "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item"
                 }
               }
             }
           }
         }
-      },
-      "items": {}
+      }
     }
   ]
 }

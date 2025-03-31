@@ -6,6 +6,8 @@ import { PrismicNextImage } from "@prismicio/next";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import * as THREE from "three";
+import { Github } from "lucide-react";
+import ProjectModal from "@/components/ProjectModal";
 
 /**
  * Props for `Projects`.
@@ -22,6 +24,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
   const [touchStart, setTouchStart] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -250,7 +253,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
   };
 
   return (
-    <section className="py-20 overflow-hidden">
+    <section className="py-16 md:py-20 lg:py-24 relative">
       <div className="container mx-auto px-4">
         {/* Section Header with Animation */}
         <motion.div
@@ -356,7 +359,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                     key={`${project.title}-${index}`}
                     className="absolute top-0 left-0 right-0 mx-auto w-[300px]"
                     style={{
-                      cursor: isActive ? "default" : "pointer",
+                      cursor: isActive ? "pointer" : "pointer",
                       pointerEvents: ["left", "center", "right"].includes(position)
                         ? "auto"
                         : "none",
@@ -379,6 +382,8 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                         } else if (position === "right") {
                           goToNext();
                         }
+                      } else if (isActive) {
+                        setSelectedProject(project);
                       }
                     }}
                     initial={false}
@@ -450,9 +455,22 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
                       {/* Project Content */}
                       <div className="flex flex-col h-[calc(100%-13rem)]">
-                        <h3 className="text-white text-lg font-semibold mb-2">
-                          {project.title}
-                        </h3>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-white text-lg font-semibold">
+                            {project.title}
+                          </h3>
+                          {project.github_link?.url && (
+                            <a
+                              href={project.github_link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="p-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-colors"
+                            >
+                              <Github className="w-4 h-4 text-[#4f8fff]" />
+                            </a>
+                          )}
+                        </div>
                         <p className="text-gray-400 text-sm mb-4 line-clamp-2">
                           {project.description}
                         </p>
@@ -535,6 +553,13 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
             </button>
           </div>
         </div>
+
+        {/* Project Modal */}
+        <ProjectModal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          project={selectedProject}
+        />
       </div>
     </section>
   );

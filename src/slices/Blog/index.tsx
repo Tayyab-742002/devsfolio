@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { BlogSlice } from "./types";
 import gsap from "gsap";
-import BlogModal from '@/components/BlogModal';
+import BlogModal from "@/components/BlogModal";
 
 export type BlogProps = SliceComponentProps<BlogSlice>;
 
@@ -24,7 +24,9 @@ const Blog = ({ slice }: BlogProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-  const [selectedBlog, setSelectedBlog] = useState<typeof slice.items[0] | null>(null);
+  const [selectedBlog, setSelectedBlog] = useState<
+    (typeof slice.items)[0] | null
+  >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -102,7 +104,7 @@ const Blog = ({ slice }: BlogProps) => {
     }
   }, [slice.items, activeIndex]);
 
-  const handleBlogClick = (blog: typeof slice.items[0]) => {
+  const handleBlogClick = (blog: (typeof slice.items)[0]) => {
     setSelectedBlog(blog);
     setIsModalOpen(true);
   };
@@ -211,7 +213,9 @@ const Blog = ({ slice }: BlogProps) => {
                       onClick={() => {
                         if (isActive) {
                           handleBlogClick(item);
-                        } else if (["left", "center", "right"].includes(position)) {
+                        } else if (
+                          ["left", "center", "right"].includes(position)
+                        ) {
                           if (position === "left") {
                             prevSlide();
                           } else if (position === "right") {
@@ -245,89 +249,81 @@ const Blog = ({ slice }: BlogProps) => {
                         transition: { duration: 0.3, ease: "easeOut" },
                       }}
                     >
+                      {/* Blog Card */}
                       <motion.div
-                        className={`group relative bg-gradient-to-b from-[#1a1a27] to-[#14141e] border-0 rounded-2xl overflow-hidden transition-all duration-300 w-[300px] h-[400px] hover:translate-y-[-4px] ${
-                          isActive ? "shadow-[0_8px_32px_rgba(79,143,255,0.15)]" : ""
-                        }`}
-                        animate={{
-                          boxShadow: isActive
-                            ? "0 8px 32px rgba(79, 143, 255, 0.15)"
-                            : "0 4px 16px rgba(0, 0, 0, 0.1)",
-                        }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="group relative w-[300px] h-[400px] bg-[#14141e] rounded-2xl overflow-hidden cursor-pointer"
+                        whileHover={{ y: -5 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                       >
-                        {/* Glass Effect Overlay */}
-                        <div className="absolute inset-0 bg-[#14141e]/50 backdrop-blur-[2px] z-0" />
-
-                        {/* Blog Image */}
-                        <div className="relative h-48 overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#14141e]/20 to-[#14141e] z-10" />
+                        {/* Image Container - Adjusted height */}
+                        <div className="relative w-full h-[180px] overflow-hidden">
                           <PrismicNextImage
                             field={item.post_thumbnail}
                             fill
-                            className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                            className="object-cover transform group-hover:scale-105 transition-transform duration-500"
                             alt={item.post_title || ""}
                           />
-                          <div className="absolute top-4 left-4 z-20">
-                            <span className="bg-[#4f8fff] bg-opacity-20 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs font-medium border border-[#4f8fff]/30 shadow-[0_0_20px_rgba(79,143,255,0.15)]">
+                          {/* Category Tag */}
+                          <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#4f8fff] rounded-full">
+                            <span className="text-xs font-medium text-white">
                               {item.post_category}
                             </span>
                           </div>
                         </div>
 
-                        {/* Blog Content */}
-                        <div className="relative z-10 flex flex-col h-[calc(100%-12rem)] p-5">
-                          <div>
-                            <h3 className="text-white text-lg font-semibold mb-3 line-clamp-2 leading-tight group-hover:text-[#4f8fff] transition-colors duration-300">
-                              {item.post_title}
-                            </h3>
-                            <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
-                              {item.post_excerpt}
-                            </p>
+                        {/* Content Container */}
+                        <div className="p-5 space-y-3">
+                          {/* Title */}
+                          <h3 className="text-lg font-semibold text-white group-hover:text-[#4f8fff] transition-colors duration-300 line-clamp-2">
+                            {item.post_title}
+                          </h3>
+
+                          {/* Excerpt */}
+                          <p className="text-sm text-gray-400 line-clamp-3">
+                            {item.post_excerpt}
+                          </p>
+
+                          {/* Metadata */}
+                          <div className="flex items-center gap-4 text-xs text-gray-400">
+                            <div className="flex items-center gap-1.5">
+                              <Clock className="w-4 h-4 text-[#4f8fff]" />
+                              <span>{item.reading_time} min read</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <Calendar className="w-4 h-4 text-[#4f8fff]" />
+                              <span>{new Date(item.post_date).toLocaleDateString()}</span>
+                            </div>
                           </div>
 
-                          {/* Author and Meta Section */}
-                          <div className="mt-auto space-y-4">
-                            {/* Author Info */}
-                            <div className="flex items-center gap-3 p-2 rounded-xl bg-[#ffffff]/5">
-                              <div className="w-10 h-10 rounded-lg overflow-hidden ring-2 ring-[#4f8fff]/20">
-                                <PrismicNextImage
-                                  field={item.author_image}
-                                  className="w-full h-full object-cover"
-                                  alt={item.author_name || ""}
-                                />
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-sm text-white font-medium">
-                                  {item.author_name}
-                                </span>
-                                <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                                  <div className="flex items-center">
-                                    <Calendar className="w-3 h-3 mr-1 text-[#4f8fff]" />
-                                    <span>{new Date(item.post_date).toLocaleDateString()}</span>
-                                  </div>
-                                  <div className="flex items-center">
-                                    <Clock className="w-3 h-3 mr-1 text-[#4f8fff]" />
-                                    <span>{item.reading_time} min read</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Reading Progress Indicator */}
-                            <div className="relative h-1 w-full bg-[#252535] rounded-full overflow-hidden">
-                              <motion.div
-                                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4f8fff] to-[#4f8fff]/70 rounded-full"
-                                initial={{ width: "0%" }}
-                                animate={{ width: `${item.reading_progress || 0}%` }}
-                                transition={{ duration: 0.5, ease: "easeOut" }}
+                          {/* Author Section */}
+                          <div className="flex items-center gap-3 pt-3 mt-3 border-t border-gray-800">
+                            <div className="relative w-9 h-9 rounded-full overflow-hidden">
+                              <PrismicNextImage
+                                field={item.author_image}
+                                fill
+                                className="object-cover"
+                                alt={item.author_name || ""}
                               />
                             </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-white font-medium truncate">{item.author_name}</p>
+                              <p className="text-xs text-gray-400 truncate">{item.author_role}</p>
+                            </div>
+
+                            {/* Read More Button */}
+                            <motion.div
+                              className="flex items-center gap-1.5 text-sm text-[#4f8fff] font-medium"
+                              whileHover={{ x: 5 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              Read More
+                              <ArrowRight className="w-4 h-4" />
+                            </motion.div>
                           </div>
                         </div>
 
-                        {/* Hover Effect Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#4f8fff]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        {/* Hover Border Effect */}
+                        <div className="absolute inset-0 border-2 border-[#4f8fff] rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                       </motion.div>
                     </motion.div>
                   );
@@ -403,3 +399,7 @@ const Blog = ({ slice }: BlogProps) => {
 };
 
 export default Blog;
+
+
+
+
