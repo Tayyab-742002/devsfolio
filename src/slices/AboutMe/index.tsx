@@ -93,16 +93,6 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
     onClick: () => handleCardInteraction(index),
   });
 
-  const skillOrbs = ["React", "Next.js", "Node"];
-  const techStack = [
-    "Frontend",
-    "Mobile",
-    "Backend",
-    "Database",
-    "DevOps",
-    "AI/ML",
-  ];
-
   return (
     <section
       ref={sectionRef}
@@ -137,7 +127,10 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 ref={glitchRef}
                 className="glitch-photo absolute inset-0 bg-gray-700 rounded-xl flex items-center justify-center text-[#4f8fff] text-sm tracking-wider"
               >
-                <PrismicNextImage field={slice.primary.avatar} />
+                <PrismicNextImage
+                  field={slice.primary.avatar}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -159,7 +152,10 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 />
               </svg>
               {slice.primary.techareas.map((item) => (
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div
+                  key={item.title}
+                  className="absolute inset-0 flex flex-col items-center justify-center"
+                >
                   <span className="text-[#4f8fff] text-md">{item.title}</span>
                   <span className="text-white text-md font-bold">
                     {item.percentage}
@@ -250,7 +246,10 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
           >
             <div className="relative w-28 h-28 rounded-xl overflow-hidden mb-4">
               <div className="glitch-photo absolute inset-0 bg-gray-700 rounded-xl flex items-center justify-center text-[#4f8fff] text-sm tracking-wider">
-                <PrismicNextImage field={slice.primary.avatar} />
+                <PrismicNextImage
+                  field={slice.primary.avatar}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -272,12 +271,15 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 />
               </svg>
               {slice.primary.techareas.map((item) => (
-                <div className="absolute inset-0 top-5 flex flex-col items-center justify-center">
+                <div
+                  key={item.title}
+                  className="absolute inset-0 top-5 flex flex-col items-center justify-center"
+                >
                   <span className="text-[#4f8fff] text-[12px]">
                     {item.title}
                   </span>
                   <span className="text-white text-[12px] font-bold">
-                    {item.percentage}%
+                    {item.percentage}
                   </span>
                 </div>
               ))}

@@ -1,33 +1,25 @@
 "use client";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-interface WrapperProps {
-  children: ReactNode;
-}
-
-const Wrapper: FC<WrapperProps> = ({ children }) => {
+const MainWrapper = ({ children }: { children: React.ReactNode }) => {
   const [dimensions, setDimensions] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
-    scrollHeight:
-      typeof document !== "undefined" ? document.body.scrollHeight : 0,
-    scrollY: typeof window !== "undefined" ? window.scrollY : 0,
+    width: 0,
+    scrollHeight: 0,
+    scrollY: 0,
   });
 
-  useEffect(() => {
-    const handleResize = () => {
-      const docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight
-      );
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
       setDimensions((prev) => ({
         ...prev,
         width: window.innerWidth,
-        height: window.innerHeight,
-        scrollHeight: docHeight,
+        scrollHeight: Math.max(
+          document.documentElement.scrollHeight,
+          window.innerHeight
+        ),
       }));
     };
 
@@ -55,54 +47,62 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
 
   const cellWidth = 200;
   const cellHeight = 300;
-  const verticalLines = Math.ceil(dimensions.width / cellWidth) + 1;
-  const horizontalLines = Math.ceil(dimensions.scrollHeight / cellHeight) + 5;
+  const verticalLines = mounted
+    ? Math.ceil(dimensions.width / cellWidth) + 1
+    : 0;
+  const horizontalLines = mounted
+    ? Math.ceil(dimensions.scrollHeight / cellHeight) + 5
+    : 0;
 
   return (
     <div
-      className="relative lg:w-[1000px]  min-h-screen "
+      className="relative lg:w-[1000px] w-full min-h-screen"
       style={{ minHeight: "100vh" }}
     >
-      {/* Animated vertical lines container */}
-      <div
-        className="fixed inset-0 z-0 overflow-visible"
-        style={{
-          height: `${dimensions.scrollHeight}px`,
-          transform: `translateY(-${dimensions.scrollY * 0.5}px)`,
-        }}
-      >
-        {Array.from({ length: verticalLines }).map((_, index) => (
+      {mounted && (
+        <>
+          {/* Animated vertical lines container */}
           <div
-            key={`v-${index}`}
-            className="animated-vertical-line"
+            className="fixed inset-0 z-0 overflow-visible"
             style={{
-              left: `${index * cellWidth}px`,
-              animationDelay: `${index * 0.2}s`,
               height: `${dimensions.scrollHeight}px`,
+              transform: `translateY(-${dimensions.scrollY * 0.5}px)`,
             }}
-          />
-        ))}
-      </div>
+          >
+            {Array.from({ length: verticalLines }).map((_, index) => (
+              <div
+                key={`v-${index}`}
+                className="animated-vertical-line"
+                style={{
+                  left: `${index * cellWidth}px`,
+                  animationDelay: `${index * 0.2}s`,
+                  height: `${dimensions.scrollHeight}px`,
+                }}
+              />
+            ))}
+          </div>
 
-      {/* Animated horizontal lines container */}
-      <div
-        className="fixed left-0 right-0 top-0 z-0 overflow-visible"
-        style={{
-          height: `${dimensions.scrollHeight}px`,
-          transform: `translateY(-${dimensions.scrollY * 0.5}px)`,
-        }}
-      >
-        {Array.from({ length: horizontalLines }).map((_, index) => (
+          {/* Animated horizontal lines container */}
           <div
-            key={`h-${index}`}
-            className="animated-horizontal-line"
+            className="fixed left-0 right-0 top-0 z-0 overflow-visible"
             style={{
-              top: `${index * cellHeight}px`,
-              animationDelay: `${index * 0.2}s`,
+              height: `${dimensions.scrollHeight}px`,
+              transform: `translateY(-${dimensions.scrollY * 0.5}px)`,
             }}
-          />
-        ))}
-      </div>
+          >
+            {Array.from({ length: horizontalLines }).map((_, index) => (
+              <div
+                key={`h-${index}`}
+                className="animated-horizontal-line"
+                style={{
+                  top: `${index * cellHeight}px`,
+                  animationDelay: `${index * 0.2}s`,
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Main content */}
       <main className="relative z-10 container mx-auto px-4">{children}</main>
@@ -193,4 +193,4 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
   );
 };
 
-export default Wrapper;
+export default MainWrapper;

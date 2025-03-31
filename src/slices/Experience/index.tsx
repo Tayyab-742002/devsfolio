@@ -179,11 +179,9 @@ const Experience: FC<ExperienceProps> = ({ slice }) => {
                 </div>
                 <div className="border-t border-[#252535] mt-3 pt-3">
                   <h5 className="text-white text-sm md:text-base mb-2">
-                    Key Achievement:
+                    {experience.key_achievement} :
                   </h5>
-                  <p className="text-[#cccccc] text-sm md:text-base mb-3">
-                    {experience.key_achievement}
-                  </p>
+
                   <div className="text-[#cccccc] text-xs md:text-sm prose prose-invert">
                     <PrismicRichText field={experience.achievments} />
                   </div>

@@ -1,0 +1,66 @@
+{
+  "id": "projects",
+  "type": "SharedSlice",
+  "name": "Projects",
+  "description": "Projects",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "projects": {
+          "type": "Group",
+          "config": {
+            "label": "projects",
+            "repeat": true,
+            "fields": {
+              "thumbnail": {
+                "type": "Image",
+                "config": {
+                  "label": "Thumbnail",
+                  "constraint": {},
+                  "thumbnails": []
+                }
+              },
+              "title": {
+                "type": "Text",
+                "config": {
+                  "label": "Title",
+                  "placeholder": ""
+                }
+              },
+              "description": {
+                "type": "Text",
+                "config": {
+                  "label": "Description",
+                  "placeholder": ""
+                }
+              },
+              "technologies": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Technologies",
+                  "placeholder": "React | Node | OpenAI",
+                  "allowTargetBlank": true,
+                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                }
+              },
+              "category": {
+                "type": "Text",
+                "config": {
+                  "label": "Category",
+                  "placeholder": "Mobile"
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

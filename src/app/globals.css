@@ -316,5 +316,79 @@ body {
   box-shadow: 0 0 20px rgba(79, 143, 255, 0.2);
 }
 
+@keyframes border-rotate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+.animate-border-rotate {
+  animation: border-rotate 3s ease-in-out infinite;
+}
+
+/* Star shape */
+.star-shape {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+@keyframes move-along-border {
+  0% {
+    transform: rotate(0deg) translateX(calc(100% - 12px));
+  }
+  100% {
+    transform: rotate(360deg) translateX(calc(100% - 12px));
+  }
+}
+
+.star {
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #4f8fff;
+  border-radius: 50%;
+  box-shadow: 0 0 2px #4f8fff, 0 0 4px #4f8fff;
+  animation: move-along-border 3s linear infinite;
+  transform-origin: 0 0;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(79, 143, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(79, 143, 255, 0.2);
+  }
+}
+
+.tech-pill-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.tech-pill-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-out;
+}
+
+
+
+
+
+
 
 

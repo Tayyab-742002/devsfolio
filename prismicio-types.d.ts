@@ -59,6 +59,7 @@ export type GithubUrlDocument<Lang extends string = string> =
   >;
 
 type LandingPageDocumentDataSlicesSlice =
+  | ProjectsSlice
   | ExperienceSlice
   | AboutMeSlice
   | HeroSlice
@@ -626,6 +627,108 @@ type NavbarSliceVariation = NavbarSliceDefault;
  */
 export type NavbarSlice = prismic.SharedSlice<"navbar", NavbarSliceVariation>;
 
+/**
+ * Item in *Projects → Default → Primary → projects*
+ */
+export interface ProjectsSliceDefaultPrimaryProjectsItem {
+  /**
+   * Thumbnail field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects[].thumbnail
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  thumbnail: prismic.ImageField<never>;
+
+  /**
+   * Title field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects[].description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Technologies field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: React | Node | OpenAI
+   * - **API ID Path**: projects.default.primary.projects[].technologies
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  technologies: prismic.RichTextField;
+
+  /**
+   * Category field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Mobile
+   * - **API ID Path**: projects.default.primary.projects[].category
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  category: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Projects → Default → Primary*
+ */
+export interface ProjectsSliceDefaultPrimary {
+  /**
+   * projects field in *Projects → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  projects: prismic.GroupField<
+    Simplify<ProjectsSliceDefaultPrimaryProjectsItem>
+  >;
+}
+
+/**
+ * Default variation for Projects Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ProjectsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Projects*
+ */
+type ProjectsSliceVariation = ProjectsSliceDefault;
+
+/**
+ * Projects Shared Slice
+ *
+ * - **API ID**: `projects`
+ * - **Description**: Projects
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSlice = prismic.SharedSlice<
+  "projects",
+  ProjectsSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -686,6 +789,11 @@ declare module "@prismicio/client" {
       NavbarSliceDefaultPrimary,
       NavbarSliceVariation,
       NavbarSliceDefault,
+      ProjectsSlice,
+      ProjectsSliceDefaultPrimaryProjectsItem,
+      ProjectsSliceDefaultPrimary,
+      ProjectsSliceVariation,
+      ProjectsSliceDefault,
     };
   }
 }
