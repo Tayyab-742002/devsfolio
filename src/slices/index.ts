@@ -9,4 +9,5 @@ export const components = {
   navbar: dynamic(() => import("./Navbar")),
   projects: dynamic(() => import("./Projects")),
   services: dynamic(() => import("./Services")),
+  testimonials: dynamic(() => import("./Testimonials")),
 };
