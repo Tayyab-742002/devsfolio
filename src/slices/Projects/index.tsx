@@ -354,12 +354,10 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                 return (
                   <motion.div
                     key={`${project.title}-${index}`}
-                    className="absolute top-0 left-0 right-0 mx-auto w-[280px]" // Updated width to match services
+                    className="absolute top-0 left-0 right-0 mx-auto w-[300px]"
                     style={{
                       cursor: isActive ? "default" : "pointer",
-                      pointerEvents: ["left", "center", "right"].includes(
-                        position
-                      )
+                      pointerEvents: ["left", "center", "right"].includes(position)
                         ? "auto"
                         : "none",
                       visibility: ["left", "center", "right"].includes(position)
@@ -375,10 +373,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                               : 10,
                     }}
                     onClick={() => {
-                      if (
-                        !isActive &&
-                        ["left", "center", "right"].includes(position)
-                      ) {
+                      if (!isActive && ["left", "center", "right"].includes(position)) {
                         if (position === "left") {
                           goToPrev();
                         } else if (position === "right") {
@@ -425,9 +420,9 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                     }}
                   >
                     <motion.div
-                      className={`bg-[#14141e] border border-[#252535] rounded-xl p-4 overflow-hidden transition-all duration-300 h-[320px] ${
+                      className={`bg-[#14141e] border border-[#252535] rounded-xl p-4 overflow-hidden transition-all duration-300 w-[300px] h-[400px] ${
                         isActive ? "border-[#4f8fff]/30" : ""
-                      }`} // Added fixed height
+                      }`}
                       animate={{
                         boxShadow: isActive
                           ? "0 8px 32px rgba(79, 143, 255, 0.15)"
@@ -439,7 +434,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       }}
                     >
                       {/* Project Image */}
-                      <div className="bg-[#252535] rounded-lg h-40 mb-4 overflow-hidden relative">
+                      <div className="bg-[#252535] rounded-lg h-48 mb-4 overflow-hidden relative">
                         {project.thumbnail ? (
                           <PrismicNextImage
                             field={project.thumbnail}
@@ -454,7 +449,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       </div>
 
                       {/* Project Content */}
-                      <div className="flex flex-col h-[calc(100%-11rem)]">
+                      <div className="flex flex-col h-[calc(100%-13rem)]">
                         <h3 className="text-white text-lg font-semibold mb-2">
                           {project.title}
                         </h3>
@@ -464,16 +459,14 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
                         {/* Technologies */}
                         <div className="flex flex-wrap gap-2 mt-auto">
-                          {extractTechnologies(project).map(
-                            (tech: any, techIndex: any) => (
-                              <span
-                                key={techIndex}
-                                className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
-                              >
-                                {tech}
-                              </span>
-                            )
-                          )}
+                          {extractTechnologies(project).map((tech: any, techIndex: any) => (
+                            <span
+                              key={techIndex}
+                              className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
+                            >
+                              {tech}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     </motion.div>
