@@ -1,29 +1,115 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import { PrismicNextLink } from "@prismicio/next";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import toast from "react-hot-toast";
 
 /**
  * Props for `Contact`.
  */
 export type ContactProps = SliceComponentProps<Content.ContactSlice>;
 
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
 /**
  * Component for "Contact" Slices.
  */
 const Contact: FC<ContactProps> = ({ slice }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (formData.name.length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+
+    if (!validateForm()) {
+      toast.error("Please fix the form errors");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: "xdtayyab0@gmail.com",
+      };
+
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // Replace with your EmailJS template ID
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! // Replace with your EmailJS public key
+      );
+
+      toast.success("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   return (
@@ -216,61 +302,99 @@ const Contact: FC<ContactProps> = ({ slice }) => {
             <motion.div whileHover={{ scale: 1.02 }} className="relative">
               <input
                 type="text"
+                name="name"
                 placeholder="Your Name"
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full bg-[#14141e] border border-[#252535] rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none text-base"
+                onChange={handleChange}
+                className={`w-full bg-[#14141e] border ${
+                  errors.name ? "border-red-500" : "border-[#252535]"
+                } rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none text-base`}
+                disabled={isSubmitting}
               />
+              {errors.name && (
+                <span className="text-red-500 text-sm mt-1">{errors.name}</span>
+              )}
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.02 }} className="relative">
               <input
                 type="email"
+                name="email"
                 placeholder="Your Email"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full bg-[#14141e] border border-[#252535] rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none text-base"
+                onChange={handleChange}
+                className={`w-full bg-[#14141e] border ${
+                  errors.email ? "border-red-500" : "border-[#252535]"
+                } rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none text-base`}
+                disabled={isSubmitting}
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.email}
+                </span>
+              )}
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.02 }} className="relative">
               <textarea
+                name="message"
                 placeholder="Your Message"
                 value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
+                onChange={handleChange}
                 rows={4}
-                className="w-full bg-[#14141e] border border-[#252535] rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none resize-none text-base"
+                className={`w-full bg-[#14141e] border ${
+                  errors.message ? "border-red-500" : "border-[#252535]"
+                } rounded-lg p-4 text-white focus:border-[#4f8fff] transition-colors outline-none resize-none text-base`}
+                disabled={isSubmitting}
               />
+              {errors.message && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.message}
+                </span>
+              )}
             </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#4f8fff] text-white px-8 py-3 rounded-full flex items-center gap-2 hover:bg-[#4f8fff]/90 transition-colors text-base"
-            >
-              SEND
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="flex justify-center mt-8">
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 20px rgba(79, 143, 255, 0.4)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="button-shine bg-[#4f8fff] text-white px-6 py-2.5 rounded-lg flex items-center gap-2 hover:bg-[#4f8fff]/90 transition-all duration-300 text-sm font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               >
-                <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </motion.button>
+                <span className="relative z-10 flex items-center gap-2">
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {!isSubmitting && (
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="transform transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      <path
+                        d="M13 3L22 12L13 21"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M2 12H22"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#4f8fff]/0 via-white/20 to-[#4f8fff]/0 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              </motion.button>
+            </div>
           </form>
         </motion.div>
       </div>

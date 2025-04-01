@@ -630,3 +630,30 @@ html, body {
     transition: opacity 0.2s ease-out !important;
   }
 }
+
+/* Add these button styles */
+.button-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: all 0.3s;
+}
+
+.button-shine:hover::after {
+  transform: rotate(45deg) translate(50%, 50%);
+}
