@@ -4,6 +4,8 @@
 
 A modern, interactive, and fully responsive developer portfolio built with Next.js, Three.js, and Prismic CMS. Features a stunning cyberpunk-inspired design with fluid animations and 3D elements.
 
+🔗 **[View Live Demo](https://devsfolio.vercel.app)**
+
 ## ✨ Features
 
 - 🎨 **Modern UI/UX** - Cyberpunk-inspired design with a futuristic aesthetic
@@ -138,7 +140,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-For any queries or support, please contact [your-email@example.com](mailto:your-email@example.com)
+For any queries or support, please contact:
+- Email: [xdtayyab0@gmail.com](mailto:xdtayyab0@gmail.com)
+- Portfolio: [devsfolio.vercel.app](https://devsfolio.vercel.app)
 
 ---
 
