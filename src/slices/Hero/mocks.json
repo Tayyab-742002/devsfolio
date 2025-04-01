@@ -25,25 +25,19 @@
 					}
 				]
 			},
-			"expertise": {
-				"__TYPE__": "StructuredTextContent",
-				"value": [
-					{
-						"type": "paragraph",
-						"content": {
-							"text": "Dolor nulla aliquip eu ullamco dolor ullamco do ut magna mollit sit eu proident pariatur. Qui excepteur elit cillum reprehenderit nostrud et Lorem consequat. Ipsum magna aute fugiat proident deserunt nulla qui consectetur."
-						}
-					}
-				]
-			},
 			"cta": {
-				"__TYPE__": "LinkContent",
 				"key": "3c870e88-6134-4727-a851-ec46ae5d28fb",
+				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",
 					"url": "http://google.com",
 					"text": "never"
 				}
+			},
+			"expertise": {
+				"__TYPE__": "FieldContent",
+				"value": "oxygen",
+				"type": "Text"
 			}
 		},
 		"items": []

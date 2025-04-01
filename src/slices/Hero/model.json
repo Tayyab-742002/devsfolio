@@ -30,15 +30,6 @@
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
           }
         },
-        "expertise": {
-          "type": "StructuredText",
-          "config": {
-            "label": "expertise",
-            "placeholder": "Your tech fields",
-            "allowTargetBlank": true,
-            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
-          }
-        },
         "cta": {
           "type": "Link",
           "config": {
@@ -48,6 +39,13 @@
             "allowTargetBlank": true,
             "allowText": true,
             "repeat": false
+          }
+        },
+        "expertise": {
+          "type": "Text",
+          "config": {
+            "label": "expertise",
+            "placeholder": ""
           }
         }
       },

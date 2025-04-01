@@ -108,7 +108,8 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
         const initialOpacity = material.userData.initialOpacity;
 
         // Pulse opacity
-        material.opacity = initialOpacity * (0.5 + 0.5 * Math.sin(time * 2 + offset));
+        material.opacity =
+          initialOpacity * (0.5 + 0.5 * Math.sin(time * 2 + offset));
 
         // Subtle position animation
         dot.position.y += Math.sin(time + offset) * 0.0005;
@@ -124,7 +125,7 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // GSAP Animations
     // Name entrance
@@ -136,9 +137,8 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
         ease: "power3.out",
       });
     }
-
     // Typing effect for expertise
-    const expertiseText = slice.primary.expertise?.[0]?.text || "";
+    const expertiseText = slice.primary.expertise || "";
 
     const words = expertiseText.split(" | ");
 
@@ -166,7 +166,7 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
 
     // Cleanup function
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       renderer.dispose();
       geometry1.dispose();
       geometry2.dispose();
@@ -174,7 +174,7 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
       material.dispose();
       dotGeometry.dispose();
       dotMaterial.dispose();
-      dots.forEach(dot => {
+      dots.forEach((dot) => {
         (dot.material as THREE.MeshPhongMaterial).dispose();
       });
     };
@@ -248,4 +248,3 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
 };
 
 export default Hero;
-

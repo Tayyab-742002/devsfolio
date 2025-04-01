@@ -67,7 +67,8 @@ type LandingPageDocumentDataSlicesSlice =
   | ExperienceSlice
   | AboutMeSlice
   | HeroSlice
-  | NavbarSlice;
+  | NavbarSlice
+  | BlogSlice;
 
 /**
  * Content for Landing Page documents
@@ -369,6 +370,169 @@ export type AboutMeSlice = prismic.SharedSlice<
   "about_me",
   AboutMeSliceVariation
 >;
+
+/**
+ * Primary content in *Blog → Default → Primary*
+ */
+export interface BlogSliceDefaultPrimary {
+  /**
+   * Section Heading field in *Blog → Default → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: Latest Blog Posts
+   * - **API ID Path**: blog.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading: prismic.TitleField;
+
+  /**
+   * Section Description field in *Blog → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Discover my latest thoughts and insights
+   * - **API ID Path**: blog.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *Blog → Items*
+ */
+export interface BlogSliceDefaultItem {
+  /**
+   * Post Thumbnail field in *Blog → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.items[].post_thumbnail
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  post_thumbnail: prismic.ImageField<never>;
+
+  /**
+   * Post Category field in *Blog → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Development
+   * - **API ID Path**: blog.items[].post_category
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  post_category: prismic.KeyTextField;
+
+  /**
+   * Post Title field in *Blog → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: How to Build Modern Web Applications
+   * - **API ID Path**: blog.items[].post_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  post_title: prismic.KeyTextField;
+
+  /**
+   * Post Excerpt field in *Blog → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief description of the blog post...
+   * - **API ID Path**: blog.items[].post_excerpt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  post_excerpt: prismic.KeyTextField;
+
+  /**
+   * Post Date field in *Blog → Items*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.items[].post_date
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  post_date: prismic.DateField;
+
+  /**
+   * Reading Time (minutes) field in *Blog → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 5
+   * - **API ID Path**: blog.items[].reading_time
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  reading_time: prismic.NumberField;
+
+  /**
+   * Post Link field in *Blog → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link to full blog post
+   * - **API ID Path**: blog.items[].post_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  post_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Author Name field in *Blog → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: John Doe
+   * - **API ID Path**: blog.items[].author_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  author_name: prismic.KeyTextField;
+
+  /**
+   * Author Image field in *Blog → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.items[].author_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  author_image: prismic.ImageField<never>;
+
+  /**
+   * Reading Progress field in *Blog → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 50
+   * - **API ID Path**: blog.items[].reading_progress
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  reading_progress: prismic.NumberField;
+}
+
+/**
+ * Default variation for Blog Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BlogSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BlogSliceDefaultPrimary>,
+  Simplify<BlogSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *Blog*
+ */
+type BlogSliceVariation = BlogSliceDefault;
+
+/**
+ * Blog Shared Slice
+ *
+ * - **API ID**: `blog`
+ * - **Description**: A carousel of blog posts
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BlogSlice = prismic.SharedSlice<"blog", BlogSliceVariation>;
 
 /**
  * Item in *Contact → Default → Primary → Social Links*
@@ -693,16 +857,6 @@ export interface HeroSliceDefaultPrimary {
   title: prismic.RichTextField;
 
   /**
-   * expertise field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Your tech fields
-   * - **API ID Path**: hero.default.primary.expertise
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  expertise: prismic.RichTextField;
-
-  /**
    * CTA field in *Hero → Default → Primary*
    *
    * - **Field Type**: Link
@@ -711,6 +865,16 @@ export interface HeroSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
   cta: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * expertise field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.expertise
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  expertise: prismic.KeyTextField;
 }
 
 /**
@@ -822,6 +986,16 @@ export type NavbarSlice = prismic.SharedSlice<"navbar", NavbarSliceVariation>;
  */
 export interface ProjectsSliceDefaultPrimaryProjectsItem {
   /**
+   * Category field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select project category
+   * - **API ID Path**: projects.default.primary.projects[].category
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  category: prismic.SelectField<"WEB" | "MOBILE" | "AI">;
+
+  /**
    * Thumbnail field in *Projects → Default → Primary → projects*
    *
    * - **Field Type**: Image
@@ -852,24 +1026,62 @@ export interface ProjectsSliceDefaultPrimaryProjectsItem {
   description: prismic.KeyTextField;
 
   /**
-   * Technologies field in *Projects → Default → Primary → projects*
+   * Live Link field in *Projects → Default → Primary → projects*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: React | Node | OpenAI
-   * - **API ID Path**: projects.default.primary.projects[].technologies
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   * - **Field Type**: Link
+   * - **Placeholder**: Project live URL
+   * - **API ID Path**: projects.default.primary.projects[].live_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  technologies: prismic.RichTextField;
+  live_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
-   * Category field in *Projects → Default → Primary → projects*
+   * GitHub Link field in *Projects → Default → Primary → projects*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: Mobile
-   * - **API ID Path**: projects.default.primary.projects[].category
-   * - **Documentation**: https://prismic.io/docs/field#key-text
+   * - **Field Type**: Link
+   * - **Placeholder**: Project GitHub URL
+   * - **API ID Path**: projects.default.primary.projects[].github_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  category: prismic.KeyTextField;
+  github_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Demo Video field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Video URL (YouTube/Vimeo)
+   * - **API ID Path**: projects.default.primary.projects[].demo_video
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  demo_video: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Long Description field in *Projects → Default → Primary → projects*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Detailed project description
+   * - **API ID Path**: projects.default.primary.projects[].long_description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  long_description: prismic.RichTextField;
 }
 
 /**
@@ -1129,6 +1341,11 @@ declare module "@prismicio/client" {
       AboutMeSliceDefaultPrimary,
       AboutMeSliceVariation,
       AboutMeSliceDefault,
+      BlogSlice,
+      BlogSliceDefaultPrimary,
+      BlogSliceDefaultItem,
+      BlogSliceVariation,
+      BlogSliceDefault,
       ContactSlice,
       ContactSliceDefaultPrimarySocialLinksItem,
       ContactSliceDefaultPrimary,

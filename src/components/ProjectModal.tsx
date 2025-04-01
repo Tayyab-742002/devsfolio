@@ -79,7 +79,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
 
   if (!project) return null;
 
-  const hasVideo = !!project.demo_video?.url;
+  const hasVideo = !!project.demo_video?.text;
 
   return (
     <AnimatePresence>
@@ -130,7 +130,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                     </div>
                   ) : (
                     <video
-                      src={project.demo_video?.url}
+                      src={project.demo_video?.text}
                       controls
                       className="w-full h-full"
                       autoPlay
@@ -149,7 +149,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                     field={project.thumbnail}
                     fill
                     className="object-cover"
-                    alt={project.title}
+                    // alt={project.title}
                   />
                 </div>
               )}
@@ -160,9 +160,9 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                   {project.title}
                 </h2>
                 <div className="flex flex-wrap gap-3">
-                  {project.live_link?.url && (
+                  {project.live_link?.text && (
                     <a
-                      href={project.live_link.url}
+                      href={project.live_link.text}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#4f8fff] hover:bg-[#4f8fff]/90 transition-all duration-300 group"
@@ -172,9 +172,9 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                       <ExternalLink className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                     </a>
                   )}
-                  {project.github_link?.url && (
+                  {project.github_link?.text && (
                     <a
-                      href={project.github_link.url}
+                      href={project.github_link.text}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-all duration-300 group border border-[#4f8fff]/20"

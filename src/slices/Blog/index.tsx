@@ -1,18 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import { PrismicNextImage } from "@prismicio/next";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Calendar,
-  Clock,
-  User,
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { BlogSlice } from "./types";
 import gsap from "gsap";
 import BlogModal from "@/components/BlogModal";
@@ -187,7 +179,7 @@ const Blog = ({ slice }: BlogProps) => {
                   return (
                     <motion.div
                       key={index}
-                      ref={(el) => (cardRefs.current[index] = el)}
+                      ref={(el: any) => (cardRefs.current[index] = el)}
                       className="absolute transform -translate-x-1/2 left-1/2"
                       style={{
                         cursor: isActive ? "pointer" : "default",
@@ -261,7 +253,7 @@ const Blog = ({ slice }: BlogProps) => {
                             field={item.post_thumbnail}
                             fill
                             className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                            alt={item.post_title || ""}
+                            // alt={item.post_title || ""}
                           />
                           {/* Category Tag */}
                           <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#4f8fff] rounded-full">
@@ -291,7 +283,9 @@ const Blog = ({ slice }: BlogProps) => {
                             </div>
                             <div className="flex items-center gap-1.5">
                               <Calendar className="w-4 h-4 text-[#4f8fff]" />
-                              <span>{new Date(item.post_date).toLocaleDateString()}</span>
+                              <span>
+                                {new Date(item.post_date).toLocaleDateString()}
+                              </span>
                             </div>
                           </div>
 
@@ -302,12 +296,16 @@ const Blog = ({ slice }: BlogProps) => {
                                 field={item.author_image}
                                 fill
                                 className="object-cover"
-                                alt={item.author_name || ""}
+                                // alt={item.author_name || ""}
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-white font-medium truncate">{item.author_name}</p>
-                              <p className="text-xs text-gray-400 truncate">{item.author_role}</p>
+                              <p className="text-sm text-white font-medium truncate">
+                                {item.author_name}
+                              </p>
+                              {/* <p className="text-xs text-gray-400 truncate">
+                                {item.author_role}
+                              </p> */}
                             </div>
 
                             {/* Read More Button */}
@@ -391,7 +389,7 @@ const Blog = ({ slice }: BlogProps) => {
         <BlogModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          blog={selectedBlog}
+          blog={selectedBlog as any}
         />
       )}
     </section>
@@ -399,7 +397,3 @@ const Blog = ({ slice }: BlogProps) => {
 };
 
 export default Blog;
-
-
-
-

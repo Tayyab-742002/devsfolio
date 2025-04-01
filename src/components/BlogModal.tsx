@@ -116,7 +116,7 @@ const BlogModal = ({ isOpen, onClose, blog }: BlogModalProps) => {
                   field={blog.post_thumbnail}
                   fill
                   className="object-cover"
-                  alt={blog.post_title}
+                  // alt={blog.post_title}
                 />
 
                 {/* Category Badge */}
@@ -154,7 +154,7 @@ const BlogModal = ({ isOpen, onClose, blog }: BlogModalProps) => {
                         field={blog.author_image}
                         className="rounded-lg object-cover"
                         fill
-                        alt={blog.author_name}
+                        // alt={blog.author_name}
                       />
                     </div>
                     <div className="flex-1 min-w-0">
