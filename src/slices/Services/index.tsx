@@ -186,8 +186,7 @@ const Services: FC<ServicesProps> = ({ slice }) => {
     <section
       ref={sectionRef}
       className="py-24"
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
+      data-slice-type="services"
     >
       <div className="container mx-auto px-4">
         <motion.div

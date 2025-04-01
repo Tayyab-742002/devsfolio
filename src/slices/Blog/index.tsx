@@ -107,7 +107,7 @@ const Blog = ({ slice }: BlogProps) => {
   };
 
   return (
-    <section className="py-20 overflow-hidden">
+    <section className="py-20 overflow-hidden" data-slice-type="blog">
       <div className="min-h-screen relative overflow-hidden">
         <div className="relative h-full pl-4 md:pl-8">
           <motion.div

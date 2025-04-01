@@ -27,7 +27,7 @@ const Contact: FC<ContactProps> = ({ slice }) => {
   };
 
   return (
-    <section className="min-h-screen relative py-20 px-4">
+    <section className="min-h-screen relative py-20 px-4" data-slice-type="contact">
       {/* Section Header */}
       <motion.div
         className="mb-20 pl-4 md:pl-8"

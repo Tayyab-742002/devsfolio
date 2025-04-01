@@ -14,7 +14,7 @@ interface ProjectModalProps {
     description: string;
     live_link?: LinkField;
     github_link?: LinkField;
-    demo_video?: LinkField;
+    demo_video?: any;
     long_description?: RichTextField;
   } | null;
 }
@@ -79,7 +79,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
 
   if (!project) return null;
 
-  const hasVideo = !!project.demo_video?.text;
+  const hasVideo = !!project.demo_video?.url;
 
   return (
     <AnimatePresence>
@@ -130,7 +130,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                     </div>
                   ) : (
                     <video
-                      src={project.demo_video?.text}
+                      src={project.demo_video?.url}
                       controls
                       className="w-full h-full"
                       autoPlay

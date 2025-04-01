@@ -68,7 +68,7 @@ const Experience: FC<ExperienceProps> = ({ slice }) => {
     <section
       ref={sectionRef}
       className="min-h-screen py-12 md:py-20 relative"
-      data-slice-type={slice.slice_type}
+      data-slice-type="experience"
       data-slice-variation={slice.variation}
     >
       {/* Title Section */}

@@ -568,3 +568,29 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Remove scrollbars */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Ensure proper overflow handling */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 1024px) {
+  body {
+    overflow-x: hidden;
+    width: 100vw;
+    position: relative;
+  }
+}

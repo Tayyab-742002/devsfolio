@@ -64,6 +64,16 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
             repeat: 1,
             yoyo: true,
             ease: "power2.inOut",
+            onStart: () => {
+              if (glitchRef.current) {
+                glitchRef.current.style.filter = 'hue-rotate(0deg)';
+              }
+            },
+            onComplete: () => {
+              if (glitchRef.current) {
+                glitchRef.current.style.filter = 'none';
+              }
+            }
           });
         }
       }, 3000);
@@ -96,11 +106,12 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen  relative overflow-hidden "
+      data-slice-type="about_me"
+      className="min-h-screen relative overflow-hidden"
     >
       <div className="relative h-full">
         <motion.div
-          className="mb-10  pl-4 md:pl-8 relative z-30"
+          className="pl-4 md:pl-8 relative z-30"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -126,6 +137,11 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
               <div
                 ref={glitchRef}
                 className="glitch-photo absolute inset-0 bg-gray-700 rounded-xl flex items-center justify-center text-[#4f8fff] text-sm tracking-wider"
+                style={{
+                  transform: 'translate(0)',
+                  transformOrigin: 'center',
+                  willChange: 'transform'
+                }}
               >
                 <PrismicNextImage
                   field={slice.primary.avatar}
@@ -353,20 +369,218 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
 
       <style jsx global>{`
         .glitch-photo {
+          position: relative;
           animation: glitch 2s infinite linear;
+          transform-origin: center;
+          will-change: transform;
+          backface-visibility: hidden;
+          perspective: 1000px;
         }
 
         @keyframes glitch {
-          2%,
-          64% {
-            transform: translate(2px, 0) skew(0deg);
+          0% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
           }
-          4%,
-          60% {
+          2% {
+            transform: translate(2px, 0) skew(0deg);
+            filter: hue-rotate(0deg);
+          }
+          4% {
             transform: translate(-2px, 0) skew(0deg);
+            filter: hue-rotate(0deg);
+          }
+          6% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          8% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          10% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          12% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          14% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          16% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          18% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          20% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          22% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          24% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          26% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          28% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          30% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          32% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          34% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          36% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          38% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          40% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          42% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          44% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          46% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          48% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          50% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          52% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          54% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          56% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          58% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          60% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
           }
           62% {
             transform: translate(0, 0) skew(5deg);
+            filter: hue-rotate(0deg);
+          }
+          64% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          66% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          68% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          70% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          72% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          74% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          76% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          78% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          80% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          82% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          84% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          86% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          88% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          90% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          92% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          94% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          96% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          98% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
+          }
+          100% {
+            transform: translate(0);
+            filter: hue-rotate(0deg);
           }
         }
 

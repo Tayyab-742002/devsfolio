@@ -253,7 +253,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
   };
 
   return (
-    <section className="py-16 md:py-20 lg:py-24 relative">
+    <section className="py-16 md:py-20 lg:py-24 relative" data-slice-type="projects">
       <div className="container mx-auto px-4">
         {/* Section Header with Animation */}
         <motion.div
