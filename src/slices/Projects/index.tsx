@@ -303,7 +303,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
         </motion.div>
 
         {/* Carousel Container */}
-        <div className="relative mx-auto max-w-4xl h-[420px] mb-12">
+        <div className="relative mx-auto w-[300px] md:max-w-4xl h-[420px] mb-12">
           <div
             ref={carouselRef}
             className="relative h-full"
@@ -331,34 +331,35 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
                 // Calculate positions in pixels
                 const xPosition = {
-                  "far-left": isMobile ? "-120px" : "-450px",
-                  left: isMobile ? "-70px" : "-220px",
+                  "far-left": isMobile ? "-85px" : "-450px",
+                  left: isMobile ? "-60px" : "-220px",
                   center: "0px",
-                  right: isMobile ? "70px" : "220px",
-                  "far-right": isMobile ? "120px" : "450px",
+                  right: isMobile ? "60px" : "220px",
+                  "far-right": isMobile ? "85px" : "450px",
                 }[position];
 
                 const opacity = {
                   "far-left": 0,
-                  left: 0.6,
+                  left: 0.4, // Reduced from 0.6
                   center: 1,
-                  right: 0.6,
+                  right: 0.4, // Reduced from 0.6
                   "far-right": 0,
                 }[position];
 
                 const scale = {
                   "far-left": 0.7,
-                  left: 0.85,
+                  left: 0.8, // Reduced from 0.85
                   center: 1,
-                  right: 0.85,
+                  right: 0.8, // Reduced from 0.85
                   "far-right": 0.7,
                 }[position];
 
                 return (
                   <motion.div
                     key={`${project.title}-${index}`}
-                    className="absolute top-0 left-0 right-0 mx-auto w-[300px]"
+                    className="absolute top-0 left-1/2 -translate-x-1/2"
                     style={{
+                      width: "300px",
                       cursor: isActive ? "pointer" : "pointer",
                       pointerEvents: ["left", "center", "right"].includes(position)
                         ? "auto"
@@ -391,12 +392,8 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       x: xPosition,
                       opacity: opacity,
                       scale: scale,
-                      rotateY:
-                        position === "left"
-                          ? 15
-                          : position === "right"
-                            ? -15
-                            : 0,
+                      rotateY: position === "left" ? 25 : position === "right" ? -25 : 0, // Increased rotation
+                      translateZ: position === "center" ? 0 : -100, // Added depth
                     }}
                     transition={{
                       type: "spring",
@@ -431,11 +428,7 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       animate={{
                         boxShadow: isActive
                           ? "0 8px 32px rgba(79, 143, 255, 0.15)"
-                          : "0 4px 16px rgba(0, 0, 0, 0.1)",
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeInOut",
+                          : "none",
                       }}
                     >
                       {/* Project Image */}

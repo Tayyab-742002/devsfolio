@@ -28,7 +28,7 @@ const iconComponents: { [key: string]: any } = {
 };
 
 // Define which tabs to show on mobile/tablet
-const mobileTabs = ['home', 'about', 'projects', 'contact'];
+const mobileTabs = ["home", "about", "projects", "contact"];
 
 /**
  * Props for `Navbar`.
@@ -39,26 +39,46 @@ export type NavbarProps = SliceComponentProps<Content.NavbarSlice>;
  * Component for "Navbar" Slices.
  */
 const Navbar: FC<NavbarProps> = ({ slice }) => {
-  const [isMobile, setIsMobile] = useState(false);
+  // Initialize isMobile with a default value based on window width if available
+  const [isMobile, setIsMobile] = useState(() => {
+    // Check if window is available (client-side)
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024;
+    }
+    // Default to false for server-side rendering
+    return false;
+  });
   const pathname = usePathname();
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
 
+    // Mark as loaded after first render
+    setIsLoaded(true);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll('section[data-slice-type]');
+      const sections = document.querySelectorAll("section[data-slice-type]");
       const scrollPosition = window.scrollY + window.innerHeight / 3; // Better offset for detection
 
       // Check if we're at the top of the page
       if (scrollPosition < window.innerHeight / 2) {
-        setActiveSection('home');
+        setActiveSection("home");
         return;
       }
 
-      let currentSection = 'home';
+      let currentSection = "home";
       let minDistance = Infinity;
 
       sections.forEach((section) => {
@@ -71,19 +91,19 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
 
         if (distance < minDistance) {
           minDistance = distance;
-          const sectionType = section.getAttribute('data-slice-type');
+          const sectionType = section.getAttribute("data-slice-type");
           if (sectionType) {
             // Map section types to navigation items
             const sectionMap: { [key: string]: string } = {
-              'hero': 'home',
-              'about_me': 'about',
-              'projects': 'projects',
-              'blog': 'blogs',
-              'contact': 'contact',
-              'experience': 'exp',
-              'services': 'services'
+              hero: "home",
+              about_me: "about",
+              projects: "projects",
+              blog: "blogs",
+              contact: "contact",
+              experience: "exp",
+              services: "services",
             };
-            currentSection = sectionMap[sectionType] || 'home';
+            currentSection = sectionMap[sectionType] || "home";
           }
         }
       });
@@ -98,15 +118,12 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
       scrollTimeout = setTimeout(handleScroll, 50);
     };
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
     window.addEventListener("scroll", debouncedScroll);
 
     // Initial check
     handleScroll();
 
     return () => {
-      window.removeEventListener("resize", checkScreenSize);
       window.removeEventListener("scroll", debouncedScroll);
       clearTimeout(scrollTimeout);
     };
@@ -155,30 +172,33 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
   const handleNavigation = (e: React.MouseEvent, linkText: string) => {
     e.preventDefault();
     const sectionMap: { [key: string]: string } = {
-      'home': 'hero',
-      'about': 'about_me',
-      'projects': 'projects',
-      'blogs': 'blog',
-      'contact': 'contact',
-      'exp': 'experience',
-      'services': 'services'
+      home: "hero",
+      about: "about_me",
+      projects: "projects",
+      blogs: "blog",
+      contact: "contact",
+      exp: "experience",
+      services: "services",
     };
 
     const sectionType = sectionMap[linkText.toLowerCase()];
     if (sectionType) {
-      if (linkText.toLowerCase() === 'home') {
+      if (linkText.toLowerCase() === "home") {
         window.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
-        setActiveSection('home');
+        setActiveSection("home");
       } else {
-        const section = document.querySelector(`section[data-slice-type="${sectionType}"]`);
+        const section = document.querySelector(
+          `section[data-slice-type="${sectionType}"]`
+        );
         if (section) {
-          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+          const sectionTop =
+            section.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
             top: sectionTop - 100, // Offset for better positioning
-            behavior: 'smooth'
+            behavior: "smooth",
           });
         }
       }
@@ -196,7 +216,7 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
     if (!slice.primary.links) return [];
 
     if (isMobile) {
-      return slice.primary.links.filter(link => {
+      return slice.primary.links.filter((link) => {
         const linkText = link?.url?.text?.trim().toLowerCase() || "home";
         return mobileTabs.includes(linkText);
       });
@@ -216,11 +236,83 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
     return <Icon className="w-4 h-4 sm:w-6 sm:h-6" strokeWidth={1.5} />;
   };
 
+  // Only render the mobile tab bar if the component has loaded
+  const renderMobileTabBar = () => {
+    if (!isLoaded || !isMobile) return null;
+
+    return (
+      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[80%] z-50">
+        <div className="mobile-tab-bar relative bg-[#14141e]/80 backdrop-blur-xl border border-[#4f8fff]/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#4f8fff]/5 via-transparent to-[#4f8fff]/5 animate-gradient-x" />
+          <div className="flex justify-around items-center relative z-10">
+            {getVisibleLinks().map((link, index) => (
+              <button
+                key={index}
+                onClick={(e) =>
+                  handleNavigation(
+                    e,
+                    link?.url?.text?.trim().toLowerCase() || "home"
+                  )
+                }
+                className={`flex flex-col items-center min-w-0 flex-1 group relative py-1.5 transition-all duration-300 ${
+                  isActive(link) ? "text-[#4f8fff]" : "text-gray-400"
+                }`}
+              >
+                {/* Active indicator */}
+                <div
+                  className={`absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#4f8fff] transition-all duration-300 ${
+                    isActive(link)
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-0"
+                  }`}
+                />
+
+                {/* Icon container */}
+                <div
+                  className={`relative mb-1 transition-transform duration-300 ${
+                    isActive(link) ? "scale-110" : "scale-100"
+                  }`}
+                >
+                  <div
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                      isActive(link)
+                        ? "bg-[#4f8fff]/10 shadow-[0_0_15px_rgba(79,143,255,0.3)]"
+                        : "bg-transparent"
+                    }`}
+                  >
+                    {getIcon(link)}
+                  </div>
+                  {/* Glow effect */}
+                  <div
+                    className={`absolute inset-0 rounded-xl transition-opacity duration-300 ${
+                      isActive(link) ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <div className="absolute inset-0 bg-[#4f8fff]/20 blur-md animate-pulse" />
+                  </div>
+                </div>
+
+                {/* Label */}
+                <span
+                  className={`text-[7px] sm:text-[8px] font-medium transition-all duration-300 truncate max-w-full text-center ${
+                    isActive(link) ? "text-[#4f8fff]" : "text-gray-400"
+                  }`}
+                >
+                  {link?.url?.text || "Link"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       {/* Desktop Navbar */}
       <header
-        className={`fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-[940px] ${
+        className={`fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full hidden lg:block max-w-[940px] ${
           isMobile ? "hidden" : "block"
         }`}
       >
@@ -263,7 +355,8 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
           <div className="flex gap-2">
             <div className="flex items-center">
               {slice.primary.links?.map((item, index) => {
-                const linkText = item?.url?.text?.trim().toLowerCase() || "home";
+                const linkText =
+                  item?.url?.text?.trim().toLowerCase() || "home";
                 const isActive = activeSection === linkText;
 
                 return (
@@ -277,9 +370,13 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
                     >
                       {item.url.text || "Link"}
                     </PrismicNextLink>
-                    <div className={`absolute -bottom-1 left-0 h-0.5 bg-[#4f8fff] transition-all duration-300 ${
-                      isActive ? "w-[40%] left-[30%]" : "w-0 group-hover:w-[40%] group-hover:left-[30%]"
-                    }`} />
+                    <div
+                      className={`absolute -bottom-1 left-0 h-0.5 bg-[#4f8fff] transition-all duration-300 ${
+                        isActive
+                          ? "w-[40%] left-[30%]"
+                          : "w-0 group-hover:w-[40%] group-hover:left-[30%]"
+                      }`}
+                    />
                   </div>
                 );
               })}
@@ -290,57 +387,8 @@ const Navbar: FC<NavbarProps> = ({ slice }) => {
           </div>
         </nav>
       </header>
-      {/* Mobile Tab Bar */}
-      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[70%] max-w-[400px] z-50">
-        <div className="mobile-tab-bar relative bg-[#14141e]/80 backdrop-blur-xl border border-[#4f8fff]/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
-          {/* Animated background gradient */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#4f8fff]/5 via-transparent to-[#4f8fff]/5 animate-gradient-x" />
-
-          {/* Tab items */}
-          <div className="flex justify-around items-center relative z-10">
-            {getVisibleLinks().map((link, index) => (
-              <button
-                key={index}
-                onClick={(e) => handleNavigation(e, link?.url?.text?.trim().toLowerCase() || "home")}
-                className={`flex flex-col items-center min-w-0 flex-1 group relative py-1.5 transition-all duration-300 ${
-                  isActive(link) ? "text-[#4f8fff]" : "text-gray-400"
-                }`}
-              >
-                {/* Active indicator */}
-                <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#4f8fff] transition-all duration-300 ${
-                  isActive(link) ? "opacity-100 scale-100" : "opacity-0 scale-0"
-                }`} />
-
-                {/* Icon container */}
-                <div className={`relative mb-1 transition-transform duration-300 ${
-                  isActive(link) ? "scale-110" : "scale-100"
-                }`}>
-                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                    isActive(link)
-                      ? "bg-[#4f8fff]/10 shadow-[0_0_15px_rgba(79,143,255,0.3)]"
-                      : "bg-transparent"
-                  }`}>
-                    {getIcon(link)}
-                  </div>
-                  {/* Glow effect */}
-                  <div className={`absolute inset-0 rounded-xl transition-opacity duration-300 ${
-                    isActive(link) ? "opacity-100" : "opacity-0"
-                  }`}>
-                    <div className="absolute inset-0 bg-[#4f8fff]/20 blur-md animate-pulse" />
-                  </div>
-                </div>
-
-                {/* Label */}
-                <span className={`text-[7px] sm:text-[8px] font-medium transition-all duration-300 truncate max-w-full text-center ${
-                  isActive(link) ? "text-[#4f8fff]" : "text-gray-400"
-                }`}>
-                  {link?.url?.text || "Link"}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Use the new render function for mobile tab bar */}
+      {renderMobileTabBar()}
     </>
   );
 };

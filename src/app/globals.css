@@ -588,9 +588,14 @@ html, body {
 
 /* Prevent horizontal scroll on mobile */
 @media (max-width: 1024px) {
-  body {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #__next, main {
+    width: 100%;
     overflow-x: hidden;
-    width: 100vw;
-    position: relative;
   }
 }

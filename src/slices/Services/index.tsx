@@ -102,7 +102,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
   return (
     <motion.div
       ref={cardRef}
-      className="w-[280px] h-[320px] mt-10 lg:mt-0 lg:ml-0 md:ml-5 ml-5   bg-[#14141e] rounded-xl border border-[#252535] flex flex-col items-center p-6  relative"
+      className="w-[280px] h-[320px] mt-10 lg:mt-0 lg:ml-0 md:ml-5    bg-[#14141e] rounded-xl border border-[#252535] flex flex-col items-center p-6  relative"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
@@ -206,9 +206,9 @@ const Services: FC<ServicesProps> = ({ slice }) => {
           <div className="w-32 h-0.5 mt-2 bg-[#4f8fff]  ml-9 neon-divider" />
         </motion.div>
 
-        <div className="services-cards flex flex-wrap lg:flex-nowrap  justify-center items-center">
+        <div className="services-cards  flex flex-wrap  lg:flex-nowrap  justify-center items-center">
           {slice.primary.services?.map((service, index) => (
-            <div key={index} className="flex items-center">
+            <div key={index} className="flex items-center mx-auto">
               <ServiceCard
                 title={service.title || ""}
                 description={service.description || ""}

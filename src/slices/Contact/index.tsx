@@ -27,7 +27,10 @@ const Contact: FC<ContactProps> = ({ slice }) => {
   };
 
   return (
-    <section className="min-h-screen relative py-20 px-4" data-slice-type="contact">
+    <section
+      className="min-h-screen relative py-20 px-4"
+      data-slice-type="contact"
+    >
       {/* Section Header */}
       <motion.div
         className="mb-20 pl-4 md:pl-8"
@@ -197,7 +200,7 @@ const Contact: FC<ContactProps> = ({ slice }) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative bg-[#14141e] border border-[#252535] rounded-xl p-8 w-full max-w-xl mx-auto lg:mr-0"
+          className="relative bg-[#14141e]  border border-[#252535] rounded-xl p-8 w-full max-w-xl mx-auto lg:mr-0"
           style={{
             animation: "float 4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
             boxShadow: `
