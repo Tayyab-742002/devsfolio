@@ -15,7 +15,7 @@ const optimizedAnimation = {
   willChange: "transform",
   backfaceVisibility: "hidden",
   perspective: 1000,
-  transform: "translateZ(0)"
+  transform: "translateZ(0)",
 };
 
 const AboutMe: FC<AboutMeProps> = ({ slice }) => {
@@ -72,7 +72,7 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
             repeat: 1,
             yoyo: true,
             ease: "none",
-            ...optimizedAnimation
+            ...optimizedAnimation,
           });
         }
       }, 4000);
@@ -90,17 +90,13 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
   };
 
   const cardProps = (index: number) => ({
-    initial: { scale: 0.95, opacity: 0.5 },
+    initial: { scale: 0.9, opacity: 0.5 },
     animate: {
-      scale: activeCard === index || !isMobile ? 1 : 0.95,
+      scale: activeCard === index || !isMobile ? 1 : 0.9,
       opacity: activeCard === index || !isMobile ? 1 : 0.7,
       zIndex: activeCard === index ? 40 : 10 + index * 10,
     },
-    transition: {
-      type: "tween", // Changed from "spring" for better performance
-      duration: 0.2,
-    },
-    style: optimizedAnimation,
+    transition: { type: "spring", stiffness: 300 },
     onHoverStart: () => !isMobile && setActiveCard(index),
     onHoverEnd: () => !isMobile && setActiveCard(null),
     onClick: () => handleCardInteraction(index),
@@ -120,7 +116,9 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
           transition={{ duration: 0.8 }}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[#4f8fff] text-lg tracking-wider neon-text">01</span>
+            <span className="text-[#4f8fff] text-lg tracking-wider neon-text">
+              01
+            </span>
             <h2 className="text-2xl  font-bold text-white tracking-wider ">
               ABOUT ME
             </h2>
@@ -141,9 +139,9 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
                 ref={glitchRef}
                 className="glitch-photo absolute inset-0 bg-gray-700 rounded-xl flex items-center justify-center text-[#4f8fff] text-sm tracking-wider"
                 style={{
-                  transform: 'translate(0)',
-                  transformOrigin: 'center',
-                  willChange: 'transform'
+                  transform: "translate(0)",
+                  transformOrigin: "center",
+                  willChange: "transform",
                 }}
               >
                 <PrismicNextImage
@@ -610,4 +608,3 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
 };
 
 export default AboutMe;
-
