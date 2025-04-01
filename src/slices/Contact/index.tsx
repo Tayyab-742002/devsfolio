@@ -126,7 +126,7 @@ const Contact: FC<ContactProps> = ({ slice }) => {
       >
         <div className="flex items-center gap-4">
           <span className="text-[#4f8fff] text-lg tracking-wider neon-text">
-            06
+            07
           </span>
           <h2 className="text-2xl font-bold text-white tracking-wider">
             GET IN TOUCH
