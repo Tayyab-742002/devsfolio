@@ -599,3 +599,34 @@ html, body {
     overflow-x: hidden;
   }
 }
+
+/* Add these performance optimizations */
+.parallax-card {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: content;
+}
+
+/* Optimize animations for mobile */
+@media (max-width: 768px) {
+  .animated-element {
+    animation-duration: 200ms !important;
+  }
+
+  /* Disable certain animations on mobile */
+  .mobile-reduced-motion {
+    animation: none !important;
+    transform: none !important;
+    transition: opacity 0.2s ease-out !important;
+  }
+}
+
+/* Add a class for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animated-element {
+    animation: none !important;
+    transform: none !important;
+    transition: opacity 0.2s ease-out !important;
+  }
+}

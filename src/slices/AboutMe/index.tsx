@@ -11,6 +11,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 export type AboutMeProps = SliceComponentProps<Content.AboutMeSlice>;
 
+const optimizedAnimation = {
+  willChange: "transform",
+  backfaceVisibility: "hidden",
+  perspective: 1000,
+  transform: "translateZ(0)"
+};
+
 const AboutMe: FC<AboutMeProps> = ({ slice }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -43,40 +50,32 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
 
       cards.forEach((card) => {
         gsap.to(card, {
-          x: `+=${gsap.utils.random(-5, 5)}`,
-          y: `+=${gsap.utils.random(-5, 5)}`,
+          x: `+=${gsap.utils.random(-3, 3)}`,
+          y: `+=${gsap.utils.random(-3, 3)}`,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top center",
             end: "bottom center",
-            scrub: true,
+            scrub: 1.5,
           },
+          ease: "power1.out",
         });
       });
 
       const glitchInterval = setInterval(() => {
         if (glitchRef.current) {
           gsap.to(glitchRef.current, {
-            duration: 0.1,
-            x: gsap.utils.random(-2, 2),
-            y: gsap.utils.random(-2, 2),
-            scale: 1.02,
+            duration: 0.15,
+            x: gsap.utils.random(-1, 1),
+            y: gsap.utils.random(-1, 1),
+            scale: 1.01,
             repeat: 1,
             yoyo: true,
-            ease: "power2.inOut",
-            onStart: () => {
-              if (glitchRef.current) {
-                glitchRef.current.style.filter = 'hue-rotate(0deg)';
-              }
-            },
-            onComplete: () => {
-              if (glitchRef.current) {
-                glitchRef.current.style.filter = 'none';
-              }
-            }
+            ease: "none",
+            ...optimizedAnimation
           });
         }
-      }, 3000);
+      }, 4000);
 
       return () => {
         window.removeEventListener("resize", checkMobile);
@@ -91,13 +90,17 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
   };
 
   const cardProps = (index: number) => ({
-    initial: { scale: 0.9, opacity: 0.5 },
+    initial: { scale: 0.95, opacity: 0.5 },
     animate: {
-      scale: activeCard === index || !isMobile ? 1 : 0.9,
+      scale: activeCard === index || !isMobile ? 1 : 0.95,
       opacity: activeCard === index || !isMobile ? 1 : 0.7,
       zIndex: activeCard === index ? 40 : 10 + index * 10,
     },
-    transition: { type: "spring", stiffness: 300 },
+    transition: {
+      type: "tween", // Changed from "spring" for better performance
+      duration: 0.2,
+    },
+    style: optimizedAnimation,
     onHoverStart: () => !isMobile && setActiveCard(index),
     onHoverEnd: () => !isMobile && setActiveCard(null),
     onClick: () => handleCardInteraction(index),

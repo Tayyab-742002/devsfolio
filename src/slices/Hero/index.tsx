@@ -93,26 +93,37 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
 
     // Animation loop
     const animate = () => {
-      requestAnimationFrame(animate);
+      // Throttle to 30fps on mobile
+      if (window.innerWidth < 768) {
+        setTimeout(() => {
+          requestAnimationFrame(animate);
+        }, 1000 / 30);
+      } else {
+        requestAnimationFrame(animate);
+      }
 
-      // Animate shapes
-      shape1.rotation.x += 0.01;
-      shape2.rotation.y += 0.01;
-      shape3.rotation.z += 0.01;
+      // Reduce animation complexity on mobile
+      const isMobile = window.innerWidth < 768;
+      const rotationSpeed = isMobile ? 0.005 : 0.01;
 
-      // Animate dots
-      const time = Date.now() * 0.001; // Current time in seconds
-      dots.forEach((dot) => {
-        const material = dot.material as THREE.MeshPhongMaterial;
-        const offset = material.userData.pulseOffset;
-        const initialOpacity = material.userData.initialOpacity;
+      shape1.rotation.x += rotationSpeed;
+      shape2.rotation.y += rotationSpeed;
+      shape3.rotation.z += rotationSpeed;
 
-        // Pulse opacity
-        material.opacity =
-          initialOpacity * (0.5 + 0.5 * Math.sin(time * 2 + offset));
+      // Optimize dots animation
+      const time = Date.now() * (isMobile ? 0.0005 : 0.001);
+      dots.forEach((dot, index) => {
+        if (index % (isMobile ? 2 : 1) === 0) { // Animate fewer dots on mobile
+          const material = dot.material as THREE.MeshPhongMaterial;
+          const offset = material.userData.pulseOffset;
+          const initialOpacity = material.userData.initialOpacity;
 
-        // Subtle position animation
-        dot.position.y += Math.sin(time + offset) * 0.0005;
+          material.opacity = initialOpacity * (0.6 + 0.4 * Math.sin(time * 2 + offset));
+
+          if (!isMobile) {
+            dot.position.y += Math.sin(time + offset) * 0.0005;
+          }
+        }
       });
 
       renderer.render(scene, camera);
