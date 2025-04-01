@@ -111,7 +111,7 @@ const AboutMe: FC<AboutMeProps> = ({ slice }) => {
     >
       <div className="relative h-full">
         <motion.div
-          className="pl-4 md:pl-8 relative z-30"
+          className="pl-4 mb-10 md:pl-8 relative z-30"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
