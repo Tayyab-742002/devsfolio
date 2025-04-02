@@ -5,7 +5,8 @@ import { SliceComponentProps } from "@prismicio/react";
 import { PrismicNextLink } from "@prismicio/next";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import toast from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
+import { SuccessIcon, ErrorIcon, WarningIcon } from "@/components/icons/ToastIcons";
 
 /**
  * Props for `Contact`.
@@ -70,7 +71,15 @@ const Contact: FC<ContactProps> = ({ slice }) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Please fix the form errors");
+      toast.error("Please fix the form errors", {
+        style: {
+          background: '#14141e',
+          color: '#fff',
+          border: '1px solid #4f8fff',
+          boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+        },
+        icon: <WarningIcon />,
+      });
       return;
     }
 
@@ -86,16 +95,34 @@ const Contact: FC<ContactProps> = ({ slice }) => {
 
       await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // Replace with your EmailJS template ID
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! // Replace with your EmailJS public key
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      toast.success("Message sent successfully!");
+      toast.success("Message sent successfully!", {
+        style: {
+          background: '#14141e',
+          color: '#fff',
+          border: '1px solid #4f8fff',
+          boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+        },
+        icon: <SuccessIcon />,
+        duration: 5000,
+      });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       console.error("Error sending email:", error);
-      toast.error("Failed to send message. Please try again.");
+      toast.error("Failed to send message. Please try again.", {
+        style: {
+          background: '#14141e',
+          color: '#fff',
+          border: '1px solid #4f8fff',
+          boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+        },
+        icon: <ErrorIcon />,
+        duration: 5000,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -360,6 +387,7 @@ const Contact: FC<ContactProps> = ({ slice }) => {
                   scale: 1.05,
                   boxShadow: "0 0 20px rgba(79, 143, 255, 0.4)",
                 }}
+                type="submit"
                 whileTap={{ scale: 0.95 }}
                 className="button-shine bg-[#4f8fff] text-white px-6 py-2.5 rounded-lg flex items-center gap-2 hover:bg-[#4f8fff]/90 transition-all duration-300 text-sm font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isSubmitting}

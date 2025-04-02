@@ -34,7 +34,37 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center items-center`}
       >
         <Wrapper>{children}</Wrapper>
-        <Toaster position="top-right" />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className: '',
+            style: {
+              background: '#14141e',
+              color: '#ffffff',
+              padding: '16px',
+              borderRadius: '8px',
+              fontSize: '14px',
+              maxWidth: '400px',
+              fontFamily: 'var(--font-geist-sans)',
+              border: '1px solid #4f8fff',
+              boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+            },
+            success: {
+              duration: 5000,
+              style: {
+                border: '1px solid #4f8fff',
+                boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+              },
+            },
+            error: {
+              duration: 5000,
+              style: {
+                border: '1px solid #4f8fff',
+                boxShadow: '0 0 15px rgba(79, 143, 255, 0.3)',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
