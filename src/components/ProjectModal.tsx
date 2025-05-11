@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PrismicNextImage } from "@prismicio/next";
-import { X, Github, Globe, Play, ExternalLink, Share2, Link as LinkIcon } from "lucide-react";
+import {
+  X,
+  Github,
+  Globe,
+  Play,
+  ExternalLink,
+  Share2,
+  Link as LinkIcon,
+} from "lucide-react";
 import { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import { PrismicRichText } from "@prismicio/react";
 
@@ -14,7 +22,9 @@ interface ProjectModalProps {
     description: string;
     live_link?: LinkField;
     github_link?: LinkField;
-    demo_video?: any;
+    demo_video?: {
+      url: string;
+    };
     long_description?: RichTextField;
   } | null;
 }
@@ -47,7 +57,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
           url: window.location.href,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        console.log("Error sharing:", error);
       }
     } else {
       setShowShareOptions(!showShareOptions);
@@ -59,7 +69,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
       await navigator.clipboard.writeText(window.location.href);
       // You could add a toast notification here
     } catch (error) {
-      console.log('Error copying to clipboard:', error);
+      console.log("Error copying to clipboard:", error);
     }
   };
 
@@ -109,34 +119,50 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
             </button>
 
             <div
-              className="flex flex-col max-h-[85vh] overflow-y-auto custom-scrollbar"
+              className="flex flex-col max-h-[90vh] overflow-y-auto custom-scrollbar"
               style={{
-                scrollbarWidth: 'thin',
-                scrollbarColor: 'rgba(79, 143, 255, 0.3) #14141e',
+                scrollbarWidth: "thin",
+                scrollbarColor: "rgba(79, 143, 255, 0.3) #14141e",
               }}
             >
               {/* Demo Video */}
               {hasVideo && (
-                <div className="relative aspect-video w-full overflow-hidden bg-black/50 border-b border-[#252535]">
+                <div className="relative w-full bg-black border-b border-[#252535]">
                   {!isPlaying ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <div className="relative aspect-video flex items-center justify-center bg-black/30">
                       <button
                         onClick={() => setIsPlaying(true)}
-                        className="group flex items-center gap-3 px-6 py-3 rounded-full bg-[#4f8fff]/20 hover:bg-[#4f8fff]/30 backdrop-blur-sm border border-[#4f8fff]/30 transition-all duration-300 hover:scale-105"
+                        className="group flex items-center gap-3 px-6 py-3 rounded-full bg-[#4f8fff]/20 hover:bg-[#4f8fff]/30 backdrop-blur-sm border border-[#4f8fff]/30 transition-all duration-300 hover:scale-105 z-10"
                       >
                         <Play className="w-6 h-6 text-[#4f8fff]" />
-                        <span className="text-white font-medium">Watch Demo</span>
+                        <span className="text-white font-medium">
+                          Watch Demo
+                        </span>
                       </button>
+                      {/* Display thumbnail as background when video is not playing */}
+                      <div className="absolute inset-0">
+                        <PrismicNextImage
+                          field={project.thumbnail}
+                          fill
+                          className="object-cover opacity-50"
+                        />
+                      </div>
                     </div>
                   ) : (
-                    <video
-                      src={project.demo_video?.url}
-                      controls
-                      className="w-full h-full"
-                      autoPlay
-                    >
-                      Your browser does not support the video tag.
-                    </video>
+                    <div className="w-full">
+                      <video
+                        src={project.demo_video?.url}
+                        controls
+                        className="w-full"
+                        autoPlay
+                        playsInline
+                        controlsList="nodownload"
+                        webkit-playsinline="true"
+                        preload="auto"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
                   )}
                 </div>
               )}
@@ -149,7 +175,6 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                     field={project.thumbnail}
                     fill
                     className="object-cover"
-                    // alt={project.title}
                   />
                 </div>
               )}
@@ -160,30 +185,34 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                   {project.title}
                 </h2>
                 <div className="flex flex-wrap gap-3">
-                  {project.live_link?.text && (
-                    <a
-                      href={project.live_link.text}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#4f8fff] hover:bg-[#4f8fff]/90 transition-all duration-300 group"
-                    >
-                      <Globe className="w-4 h-4" />
-                      <span className="font-medium text-sm">Visit Website</span>
-                      <ExternalLink className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                    </a>
-                  )}
-                  {project.github_link?.text && (
-                    <a
-                      href={project.github_link.text}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-all duration-300 group border border-[#4f8fff]/20"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span className="font-medium text-sm">View Code</span>
-                      <ExternalLink className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                    </a>
-                  )}
+                  {project.live_link &&
+                    project.live_link.link_type !== "Any" && (
+                      <a
+                        href={project.live_link.url || ""}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#4f8fff] hover:bg-[#4f8fff]/90 transition-all duration-300 group"
+                      >
+                        <Globe className="w-4 h-4" />
+                        <span className="font-medium text-sm">
+                          Visit Website
+                        </span>
+                        <ExternalLink className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      </a>
+                    )}
+                  {project.github_link &&
+                    project.github_link.link_type !== "Any" && (
+                      <a
+                        href={project.github_link.url || ""}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-all duration-300 group border border-[#4f8fff]/20"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span className="font-medium text-sm">View Code</span>
+                        <ExternalLink className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      </a>
+                    )}
                   <button
                     onClick={handleShare}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-all duration-300 group border border-[#4f8fff]/20 relative"
@@ -230,5 +259,3 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
 };
 
 export default ProjectModal;
-
-

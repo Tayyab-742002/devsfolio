@@ -12,6 +12,14 @@
       "description": "Default",
       "imageUrl": "",
       "primary": {
+        "avatar": {
+          "type": "Image",
+          "config": {
+            "label": "avatar",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
         "name": {
           "type": "StructuredText",
           "config": {

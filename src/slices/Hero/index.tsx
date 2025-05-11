@@ -2,7 +2,7 @@
 import { FC, useEffect, useRef } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-import { PrismicNextLink } from "@prismicio/next";
+import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import * as THREE from "three";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -113,12 +113,14 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
       // Optimize dots animation
       const time = Date.now() * (isMobile ? 0.0005 : 0.001);
       dots.forEach((dot, index) => {
-        if (index % (isMobile ? 2 : 1) === 0) { // Animate fewer dots on mobile
+        if (index % (isMobile ? 2 : 1) === 0) {
+          // Animate fewer dots on mobile
           const material = dot.material as THREE.MeshPhongMaterial;
           const offset = material.userData.pulseOffset;
           const initialOpacity = material.userData.initialOpacity;
 
-          material.opacity = initialOpacity * (0.6 + 0.4 * Math.sin(time * 2 + offset));
+          material.opacity =
+            initialOpacity * (0.6 + 0.4 * Math.sin(time * 2 + offset));
 
           if (!isMobile) {
             dot.position.y += Math.sin(time + offset) * 0.0005;
@@ -202,7 +204,15 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
         <div className="relative w-48 h-48 mx-auto mb-8">
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#4f8fff] to-transparent opacity-30 blur-xl animate-pulse" />
           <div className="relative w-full h-full rounded-full bg-[#14141e]">
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#4f8fff20] to-[#14141e] border border-[#4f8fff30]" />
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#4f8fff20] to-[#14141e] border border-[#4f8fff30]">
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                <PrismicNextImage
+                  field={slice.primary.avatar}
+                  className="w-full h-full object-cover"
+                  fallbackAlt=""
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -238,7 +248,8 @@ const Hero: FC<SliceComponentProps<Content.HeroSlice>> = ({ slice }) => {
 
         {/* CTA Button */}
         <PrismicNextLink
-          field={slice.primary.cta}
+          // field={slice.primary.cta}
+          href={"#projects"}
           className="inline-flex items-center gap-2 px-8 py-3 rounded-full border-2 border-[#4f8fff] text-white hover:bg-[#4f8fff20] transition-all duration-300 group"
         >
           EXPLORE WORK

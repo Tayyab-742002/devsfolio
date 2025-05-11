@@ -837,6 +837,16 @@ export type FooterSlice = prismic.SharedSlice<"footer", FooterSliceVariation>;
  */
 export interface HeroSliceDefaultPrimary {
   /**
+   * avatar field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.avatar
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  avatar: prismic.ImageField<never>;
+
+  /**
    * Name field in *Hero → Default → Primary*
    *
    * - **Field Type**: Rich Text

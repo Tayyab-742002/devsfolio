@@ -107,7 +107,8 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
       setFilteredProjects(processedProjects);
     } else {
       const filtered = processedProjects.filter(
-        (project) => project.category && project.category.toUpperCase() === activeFilter
+        (project) =>
+          project.category && project.category.toUpperCase() === activeFilter
       );
       setFilteredProjects(filtered);
     }
@@ -253,7 +254,11 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
   };
 
   return (
-    <section className="py-16 md:py-20 lg:py-24 relative" data-slice-type="projects">
+    <section
+      className="py-16 md:py-20 lg:py-24 relative"
+      data-slice-type="projects"
+      id="projects"
+    >
       <div className="container mx-auto px-4">
         {/* Section Header with Animation */}
         <motion.div
@@ -361,7 +366,9 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                     style={{
                       width: "300px",
                       cursor: isActive ? "pointer" : "pointer",
-                      pointerEvents: ["left", "center", "right"].includes(position)
+                      pointerEvents: ["left", "center", "right"].includes(
+                        position
+                      )
                         ? "auto"
                         : "none",
                       visibility: ["left", "center", "right"].includes(position)
@@ -377,7 +384,10 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                               : 10,
                     }}
                     onClick={() => {
-                      if (!isActive && ["left", "center", "right"].includes(position)) {
+                      if (
+                        !isActive &&
+                        ["left", "center", "right"].includes(position)
+                      ) {
                         if (position === "left") {
                           goToPrev();
                         } else if (position === "right") {
@@ -392,7 +402,12 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       x: xPosition,
                       opacity: opacity,
                       scale: scale,
-                      rotateY: position === "left" ? 25 : position === "right" ? -25 : 0, // Increased rotation
+                      rotateY:
+                        position === "left"
+                          ? 25
+                          : position === "right"
+                            ? -25
+                            : 0, // Increased rotation
                       translateZ: position === "center" ? 0 : -100, // Added depth
                     }}
                     transition={{
@@ -470,14 +485,16 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
 
                         {/* Technologies */}
                         <div className="flex flex-wrap gap-2 mt-auto">
-                          {extractTechnologies(project).map((tech: any, techIndex: any) => (
-                            <span
-                              key={techIndex}
-                              className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
-                            >
-                              {tech}
-                            </span>
-                          ))}
+                          {extractTechnologies(project).map(
+                            (tech: any, techIndex: any) => (
+                              <span
+                                key={techIndex}
+                                className="px-2 py-0.5 text-xs border border-primary-500 rounded-full text-white cursor-pointer hover:bg-[#4f8fff]/5 transition-colors"
+                              >
+                                {tech}
+                              </span>
+                            )
+                          )}
                         </div>
                       </div>
                     </motion.div>
