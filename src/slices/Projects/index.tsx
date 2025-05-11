@@ -6,7 +6,7 @@ import { PrismicNextImage } from "@prismicio/next";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import * as THREE from "three";
-import { Github } from "lucide-react";
+import { Github, Globe } from "lucide-react";
 import ProjectModal from "@/components/ProjectModal";
 
 /**
@@ -464,20 +464,35 @@ const Projects: FC<ProjectsProps> = ({ slice }) => {
                       {/* Project Content */}
                       <div className="flex flex-col h-[calc(100%-13rem)]">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-white text-lg font-semibold">
+                          <h3 className="text-white text-lg font-semibold truncate pr-2">
                             {project.title}
                           </h3>
-                          {project.github_link?.url && (
-                            <a
-                              href={project.github_link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className="p-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-colors"
-                            >
-                              <Github className="w-4 h-4 text-[#4f8fff]" />
-                            </a>
-                          )}
+                          <div className="flex gap-1">
+                            {project.live_link &&
+                              project.live_link.link_type !== "Any" && (
+                                <a
+                                  href={project.live_link.url || ""}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="p-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-colors"
+                                >
+                                  <Globe className="w-4 h-4 text-[#4f8fff]" />
+                                </a>
+                              )}
+                            {project.github_link &&
+                              project.github_link.link_type !== "Any" && (
+                                <a
+                                  href={project.github_link.url || ""}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="p-2 rounded-lg bg-[#252535] hover:bg-[#252535]/90 transition-colors"
+                                >
+                                  <Github className="w-4 h-4 text-[#4f8fff]" />
+                                </a>
+                              )}
+                          </div>
                         </div>
                         <p className="text-gray-400 text-sm mb-4 line-clamp-2">
                           {project.description}
